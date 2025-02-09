@@ -26,19 +26,28 @@ In accordance to the vision statement, the project will provide encompass the fo
   - Reserving Library Community Rooms
   - Registering for a membership
   - Registering for community events
+  - Placing materials on hold.
+  - Viewing all books by a specific author that the library posses.
   - TODO: Add here
+
 - Staff
   - Handling/Tracking membership status
   - Handling material check out/returns
   - Handling room reservations
-  - Parsing donations
+  - Tracking of how many books each member has donated.
   - Posting Community Events
+  - Ability to add new materials when the Library aquires them.
+  - Ability to remove material from public circulation.
   - TODO: Add here
 
 This project will not encompass the following features
 - Users
+  - Ability to access materials held by other libraries.
+  - Handling of monetary donations.
   - TODO: Add here
 - Staff
+  - An inter-library loan system.
+  - A system to raise fund for the library.
   - TODO: Add here
 
 
