@@ -18,7 +18,7 @@ Libraries are more than just a place to check out books. They are an essential i
 ***Team 19 recognizes that there have been many attacks on the autonomy of libraries as means of connection to the community. Team 19 condemns any actions taken to take advantage of the outreach that libraries have in their community. Team 19 strongly believes that libraries should be a location for discourse, not censorship.***
 
 ## Scope Statement
-In accordance to the vision statement, the project will provide encompass the following features:
+In accordance to the vision statement, the project will provide encompass the following feature:
 - Users
   - Searching for available items in inventory
   - Checking out/Returning library materials
@@ -26,19 +26,23 @@ In accordance to the vision statement, the project will provide encompass the fo
   - Reserving Library Community Rooms
   - Registering for a membership
   - Registering for community events
+  - TODO: Add here
 - Staff
   - Handling/Tracking membership status
   - Handling material check out/returns
   - Handling room reservations
   - Parsing donations
   - Posting Community Events
+  - TODO: Add here
 
 This project will not encompass the following features
 - Users
-  - TODO: Add Here
+  - TODO: Add here
 - Staff
-  - TODO: Add Here
+  - TODO: Add here
 
+
+The reasons for what we chose to/chose not to provide for this interface is simple: we want a solution that can be utilized for any library. The essential features detailed above encompass the most essential features that a library can provide. We want it to be possible for every library to implement this system. Team 19 notes that every library has their own essential features and these features can supported due to our third part of our pledge in the vision statement.
 
 ## Team Organization and Profiles
 **Team Name:** DataBased
@@ -60,7 +64,7 @@ This project will not encompass the following features
 **Senior Tech Lead:** Dellie Wright
 - **Contact Info:** `delsterone [at] gmail [dot] com`
 - **Computing Platform Experience:** Linux, Windows, MacOS
-- **Programming Knowledge:**
+- **Programming Knowledge:** Rust, C, Python, C++
 
 <br>
 <img src="static/headshots/evan.jpeg" alt="Evan" width="450" height="600">
