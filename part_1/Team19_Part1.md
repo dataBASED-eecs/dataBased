@@ -100,6 +100,6 @@ The reasons for what we chose to/chose not to provide for this interface is simp
 - **Programming Knowledge:** Python, SQL
 
 ## Project Meeting Log
-**Reference File**: [020725](../Documentation/Meeting%20Logs/020725.md)
+**Reference File**: [020725](../Documentation/meeting_logs/020725.md)
 
 
