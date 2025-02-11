@@ -28,6 +28,8 @@ In accordance to the vision statement, the project will provide encompass the fo
   - Registering for community events
   - Placing materials on hold.
   - Viewing all books by a specific author that the library posses.
+  - Renewing borrowed items if no holds are placed.
+  - Viewing currently borrowed/checked-out books.
   - TODO: Add here
 
 - Staff
@@ -38,16 +40,22 @@ In accordance to the vision statement, the project will provide encompass the fo
   - Posting Community Events
   - Ability to add new materials when the Library aquires them.
   - Ability to remove material from public circulation.
+  - Tracking and resolving overdue fines/fees.
   - TODO: Add here
 
 This project will not encompass the following features
 - Users
   - Ability to access materials held by other libraries.
   - Handling of monetary donations.
+  - Selling library materials.
+  - Accessing external databases outside of the library's collection.
+  - Creation and management of personal book collections for users(favorites, TBR, etc.).
   - TODO: Add here
 - Staff
   - An inter-library loan system.
   - A system to raise fund for the library.
+  - Staff management or payroll features.
+  - Data analytics or insights into library data over time.
   - TODO: Add here
 
 
