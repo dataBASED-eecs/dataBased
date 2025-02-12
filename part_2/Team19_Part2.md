@@ -2,8 +2,8 @@
 
 ## Introduction
 ## Stakeholders
-## Requirements
-### Data Requirements
+## Conceptual Requirements
+### Data Entities
 ### Functional Requirements
 ### Non-Functional Requirements
 ## System Requirements
