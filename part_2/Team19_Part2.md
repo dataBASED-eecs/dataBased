@@ -81,12 +81,27 @@
     - Number > 0
 - Community Event
   - Organizer First Name
+    - String
   - Organizer Last Name
-  - Date
+    - String
   - Start Time
+    - Numeric in Epoch Time
   - End Time 
-  - Location
+    - Numeric in Epoch Time
+  - Longitudinal Location
+    - Floating Point
+    - Location >= -180
+    - Location <= 180
+  - Latitudinal Location
+    - Floating Point
+    - Location >= -180
+    - Location <= 180
 ### Functional Requirements
+- Users may check out any number of books
+  - Check out Date
+    - Numeric in Epoch Time
+- User may check out any number of movies
+- 
 ### Non-Functional Requirements
 ## System Requirements
 ### Software Requirements
