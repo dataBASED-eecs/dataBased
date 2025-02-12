@@ -30,6 +30,8 @@ In accordance to the vision statement, the project will provide encompass the fo
   - Viewing all books by a specific author that the library posses.
   - Renewing borrowed items if no holds are placed.
   - Viewing currently borrowed/checked-out books.
+  - Viewing fines for books that are returned late
+  - Paying late fines
   - TODO: Add here
 
 - Staff
@@ -50,12 +52,16 @@ This project will not encompass the following features
   - Selling library materials.
   - Accessing external databases outside of the library's collection.
   - Creation and management of personal book collections for users(favorites, TBR, etc.).
+  - Sugesting books and other materials based on a user's history
+  - Physical location of library materials within a library map
   - TODO: Add here
 - Staff
   - An inter-library loan system.
   - A system to raise fund for the library.
   - Staff management or payroll features.
   - Data analytics or insights into library data over time.
+  - Tracking library expenses
+  - Sugesting books that the library should aquire
   - TODO: Add here
 
 
