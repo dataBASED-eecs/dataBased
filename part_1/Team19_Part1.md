@@ -32,7 +32,6 @@ In accordance to the vision statement, the project will provide encompass the fo
   - Viewing currently borrowed/checked-out books.
   - Viewing fines for books that are returned late
   - Paying late fines
-  - TODO: Add here
 
 - Staff
   - Handling/Tracking membership status
@@ -43,7 +42,6 @@ In accordance to the vision statement, the project will provide encompass the fo
   - Ability to add new materials when the Library aquires them.
   - Ability to remove material from public circulation.
   - Tracking and resolving overdue fines/fees.
-  - TODO: Add here
 
 This project will not encompass the following features
 - Users
@@ -54,7 +52,6 @@ This project will not encompass the following features
   - Creation and management of personal book collections for users(favorites, TBR, etc.).
   - Sugesting books and other materials based on a user's history
   - Physical location of library materials within a library map
-  - TODO: Add here
 - Staff
   - An inter-library loan system.
   - A system to raise fund for the library.
@@ -62,8 +59,6 @@ This project will not encompass the following features
   - Data analytics or insights into library data over time.
   - Tracking library expenses
   - Sugesting books that the library should aquire
-  - TODO: Add here
-
 
 The reasons for what we chose to/chose not to provide for this interface is simple: we want a solution that can be utilized for any library. The essential features detailed above encompass the most essential features that a library can provide. We want it to be possible for every library to implement this system. Team 19 notes that every library has their own essential features and these features can supported due to our third part of our pledge in the vision statement.
 
@@ -115,5 +110,4 @@ The reasons for what we chose to/chose not to provide for this interface is simp
 
 ## Project Meeting Log
 **Reference File**: [020725](../documentation/meeting_logs/020725.md)
-
-
+**Reference File**: [021455 ❤️](../documentation/meeting_logs/021425.md)
