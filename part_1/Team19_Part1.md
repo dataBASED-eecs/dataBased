@@ -110,4 +110,4 @@ The reasons for what we chose to/chose not to provide for this interface is simp
 
 ## Project Meeting Log
 **Reference File**: [020725](../documentation/meeting_logs/020725.md)
-**Reference File**: [021455 ❤️](../documentation/meeting_logs/021425.md)
+**Reference File**: [021455](../021425.md)
