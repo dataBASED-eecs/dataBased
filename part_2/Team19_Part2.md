@@ -59,6 +59,11 @@
     - String
   - ISBN
     - Numeric (13 digits to account for ISBN-10 and ISBN-13)
+  - Quantity
+    - Numeric
+- Book Series
+  - Series Name
+    - String
 - Movie
   - Title
     - String
@@ -71,7 +76,9 @@
   - Studio
     - String
   - ISAN
-     - Alphanumeric (24 digits to account for ISAN-10 and ISAN-13)
+    - Alphanumeric (24 digits to account for ISAN-10 and ISAN-13)
+  - Quantity
+    - Numeric
 - Rooms
   - Room Number
     - Numeric
@@ -97,10 +104,40 @@
     - Location >= -180
     - Location <= 180
 ### Functional Requirements
-- Users may check out any number of books
-  - Check out Date
-    - Numeric in Epoch Time
-- User may check out any number of movies
+#### Conceptual Queries
+- Members may search for any of the materials that the library has in inventory based on any attribute of said entity
+  - Example: A user may search a book by title, as well as ISBN
+- Members may hold a reserveration on library materials
+- Members may reserve any of study rooms
+  - Reservation start time
+  - Reservation end time
+  - Reservation name
+- Members may create a community event
+- Members may donate library materials
+- Members may have the ability to pay fines and fees
+- Members may see all library materials checked out at any given time
+- Staff may check out a library material for a user. If a material is on hold the checkout is denied
+  - Check out date
+  - Expected Return Date
+- Staff may process returns of library materials
+- Staff may extend the return data for a member's material checkout
+- Staff may bestow a membership on a new member
+- Staff may administer fines and fees to members
+- Staff may view how donations a member has donated
+- Staff may the ability to add/remove items from library inventory
+#### Report Generation
+- All materials
+  - The user of the database will be able to see all the materials that a library has based on attributes of interest
+- All room reservations based on relevant attributes
+  - The user of the database will be able to see all the relevant datapoints for any room reservation
+- View all fines (with implicit fine calculation)
+  - The user of the database will view all the fines for every member in the database
+- View number of donations for every member
+  - The user of the database will be able to see the number of items that every member has donated
+- View the materials on hold
+  - The user of the database will be able to see what materials each user has placed a reservation for
+- View all the book series available and the books attributed to them
+- View all the community events available based on relevant attributes
 - 
 ### Non-Functional Requirements
 ## System Requirements
