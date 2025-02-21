@@ -1,7 +1,20 @@
 # EECS 447 Final Project Part 1
 
 ## Introduction
+
+
+  The library management system should faciliate knowlege sharing, community meeting and community events within the library. To do this, it should include an interface for members to checkout and return library materials. If materials are returned late, members will be able to view and resolve late fees. Members will also be able to view community events at the library and register to attend specific events. Library staff should be able to use the system to view, add and remove materials. The system will help librarians track and resolve late fees. In addition to interating with library materials library, staff should be able to create and manage community events. The library mangment system will not include inter-library communication, loans, or fundraising features. It will also not include finantial features like donations, sales, or payroll. The system will not provide analytics of the library over time or sugest materials for either the library or members.
+
 ## Stakeholders
+
+  The two main stakeholder groups for the library database are the librarians and the members of the library. Both parties will need an interface to search for materials within the library and modify the status of materials. They will also both interact with the library as a community meeting place. To facilitate that, the database system should track community events.
+  
+  The librarians will interact with the library database to search for, add and remove library materials. They will also need to organize community events, and set up rooms within the library that can be reserved. It would be helpful for the librarians to know how many people plan to attend each community event.
+  
+  The members of the library will use the library database to search for, checkout and return books. Members must also be able to register attendance for community events and reserve rooms within the library. If a member returns a book late, they must be able to view the late fees they owe and pay the late fees. The database system should facilitate tracking of late fees.
+  
+  Finally, the library administrators need to be able to see a high level view of the library's status. They should be able to see the total late fees the library is due, the materials the library has access to and how many materials are currently lent out. While the may not be directly lending or returning materials from the library system, this high level view will help them keep track of the health of the library
+
 ## Conceptual Requirements
 ### Data Entities
 - Member: These are people who use the library, but do not work there
