@@ -151,6 +151,7 @@
 - View all the book series available and the books attributed to them
 - View all the community events available based on relevant attributes
 - View all the members attending community events
+- (Elaborate) - Determine how long a member can check out a book based on how often they accumlate and pay back fines
 
 ### Non-Functional Requirements
 
