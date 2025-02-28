@@ -153,6 +153,65 @@
 - View all the community events available based on relevant attributes
 - 
 ### Non-Functional Requirements
+
+#### 1. Performance
+
+- Response Time: The system should respond to user queries (e.g., searching for books, checking out materials) within 2 seconds under normal load.
+    
+- Throughput: The system should handle at least 5 concurrent users without significant performance degradation.
+    
+- Latency: Database operations (e.g., adding, updating, or deleting records) should complete within 1 second for 95% of transactions.
+#### 2. Availability
+
+- The system should have an uptime of 99.9%, ensuring it is available for use during library operating hours.
+    
+- The system should support failover mechanisms to ensure continuity of service in case of hardware or software failures.
+  #### 3. Security
+
+- Authentication: All users (members and staff) must authenticate using a secure method (e.g., username/password, multi-factor authentication).
+    
+- Authorization: Access to sensitive operations (e.g., adding/removing materials, managing fines) should be restricted to authorized staff members.
+    
+- Data Encryption: Sensitive data (e.g., member information, payment details) should be encrypted both in transit (using HTTPS) and at rest.
+    
+- Audit Logs: The system should maintain logs of all critical operations (e.g., checkouts, returns, fee payments) for auditing purposes.
+
+#### 4. Reliability
+
+- The system should have a mean time between failures (MTBF) of at least 1,000 hours.
+    
+- In case of a failure, the system should recover within 5 minutes (mean time to recovery, MTTR).
+    
+#### 5. Usability
+
+- User Interface: The system should have an intuitive and user-friendly interface for both members and staff.
+    
+- Accessibility: The system should comply with accessibility standards (e.g., WCAG 2.1) to ensure it is usable by individuals with disabilities.
+    
+- Training: The system should include documentation and training materials to help users (especially staff) learn how to use it effectively.
+
+#### 6. Scalability
+
+- The system should support horizontal scaling to accommodate an increasing number of users - the amount of users our library serves - (e.g., from 100 to 10,000 users) without requiring significant architectural changes.
+    
+- The database should handle up to 1 million records (e.g., books, members, events) without performance degradation.
+  
+#### 7. Data Integrity
+
+- The system should enforce referential integrity (e.g., a member cannot check out a book that does not exist in the database).
+    
+- The system should prevent data corruption by implementing transaction management (e.g., ACID properties).
+#### 8. Backup and Recovery
+
+- The system should perform daily backups of the database to prevent data loss.
+    
+- In case of data loss, the system should be able to restore data from backups within 1 hour.
+  
+#### 9. Extensibility
+
+- The system should allow for the addition of new features (e.g., support for new types of materials, integration with external APIs) without requiring significant rework.
+
+
 ## System Requirements
 ### Software Requirements
 ### Hardware Requirements
