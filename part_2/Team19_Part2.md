@@ -150,7 +150,8 @@
   - The user of the database will be able to see what materials each user has placed a reservation for
 - View all the book series available and the books attributed to them
 - View all the community events available based on relevant attributes
-- 
+- View all the members attending community events
+
 ### Non-Functional Requirements
 
 #### 1. Performance
