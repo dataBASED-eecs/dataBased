@@ -166,7 +166,7 @@
 - The system should have an uptime of 99.9%, ensuring it is available for use during library operating hours.
     
 - The system should support failover mechanisms to ensure continuity of service in case of hardware or software failures.
-  #### 3. Security
+#### 3. Security
 
 - Authentication: All users (members and staff) must authenticate using a secure method (e.g., username/password, multi-factor authentication).
     
