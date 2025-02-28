@@ -135,7 +135,7 @@
 - Staff may extend the return data for a member's material checkout
 - Staff may bestow a membership on a new member
 - Staff may administer fines and fees to members
-- Staff may view how donations a member has donated
+- Staff may view how many donations a member has donated
 - Staff may the ability to add/remove items from library inventory
 #### Report Generation
 - All materials
