@@ -1,4 +1,4 @@
-# EECS 447 Final Project Part 1
+# EECS 447 Final Project Part 2
 
 ## Introduction
 
@@ -173,7 +173,7 @@
     
 - Authorization: Access to sensitive operations (e.g., adding/removing materials, managing fines) should be restricted to authorized staff members.
     
-- Data Encryption: Sensitive data (e.g., member information, payment details) should be encrypted both in transit (using HTTPS) and at rest.
+- Data Encryption: Sensitive data (e.g., member information, payment details) should be encrypted both in transit and at rest.
     
 - Audit Logs: The system should maintain logs of all critical operations (e.g., checkouts, returns, fee payments) for auditing purposes.
 
@@ -201,7 +201,7 @@
 
 - The system should enforce referential integrity (e.g., a member cannot check out a book that does not exist in the database).
     
-- The system should prevent data corruption by implementing transaction management (e.g., ACID properties).
+- The system should prevent data corruption by implementing transaction management (e.g. ACID properties).
 #### 8. Backup and Recovery
 
 - The system should perform daily backups of the database to prevent data loss.
@@ -230,3 +230,4 @@
       - NIC: Dual 25DbE Network Adapters (for high-speed data transmission)
       - Firewall & Security UFW (Uncomplicated Firewall) with IP whitelisting
 ## Appendices
+None to include.
