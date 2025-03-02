@@ -231,3 +231,7 @@
       - Firewall & Security UFW (Uncomplicated Firewall) with IP whitelisting
 ## Appendices
 None to include.
+
+## Meeting Logs
+**Reference Document: **[022125](https://github.com/dataBASED-eecs/dataBased/blob/main/documentation/meeting_logs/022125.md)
+**Reference Document: **[022825](https://github.com/dataBASED-eecs/dataBased/blob/main/documentation/meeting_logs/022825.md)
