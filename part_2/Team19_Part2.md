@@ -215,5 +215,18 @@
 
 ## System Requirements
 ### Software Requirements
+- Operating System: Ubuntu 22.04.5 LTS (Jammy Jellyfish) Linux
+- Database Management System (DBMS): PostgreSQL 16
+- Rust Toolchain: Rust 1.75+, interfacing the DBMS with `sqlx`, the open source Rust SQL toolkit
 ### Hardware Requirements
+  - Components (built based on the KU EECS cycle servers):
+    - CPU: Intel Xeon Gold 6526Y, 3500 MHz, 38400 KB Cache Size, 16 Cores (64 total units, ensuring high concurrency and parallelism)
+    - Memory (RAM): 264 GB DDR5 ECC RAM (for large-scale in-memory processing and caching)
+    - Storage:
+      - Primary Storage: 2TB NVMe SSD (low-latency for database transactions)
+      - Backup Storage: 8TB SATA SSD (for periodic snapshots and redundancy)
+      - RAID Configuration: RAID 1 or RAID 10 (for fault tolerance and data integrity)
+    - Networking:
+      - NIC: Dual 25DbE Network Adapters (for high-speed data transmission)
+      - Firewall & Security UFW (Uncomplicated Firewall) with IP whitelisting
 ## Appendices
