@@ -1,4 +1,5 @@
 # Graphviz
+```
 graph ER_Diagram 
     {
     /* Entity Definition */
@@ -230,3 +231,4 @@ graph ER_Diagram
     organize_community_event -- community_event
     
     }
+```
