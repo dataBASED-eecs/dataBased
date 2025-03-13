@@ -14,6 +14,8 @@ graph ERDiagram
     ***************************************************************************************/
     subgraph cluster_member_entity
         {
+        style=filled;
+        fillcolor=lightblue;
         // Define the entity node
         node[ shape=rect ]
         member[shape=rect, label="Member"]
@@ -39,6 +41,8 @@ graph ERDiagram
     /* Staff Entity Definition */
     subgraph cluster_staff_entity 
         {
+        style=filled;
+        fillcolor=lightblue;
         // Define the entity node
         node[ shape=rect ]
         staff[ label="Staff" ]
@@ -60,6 +64,8 @@ graph ERDiagram
     /* Cluster Entity Definition */
     subgraph cluster_material_entity
         {
+        style=filled;
+        fillcolor=lightblue;
         // Define the entity node
         node[ shape=rect ]
         material[ label="Material" ]
@@ -75,6 +81,8 @@ graph ERDiagram
     /* Book Entity Definition */
     subgraph cluster_book_entity 
         {
+        style=filled;
+        fillcolor=lightblue;
         // Define the entity node
         node[ shape=rect ]
         book[ label="Book" ]
@@ -92,6 +100,8 @@ graph ERDiagram
     /* Book-Copy Entity Definition */
     subgraph cluster_book_copy_entity 
         {
+        style=filled;
+        fillcolor=lightblue;
         // Define the entity node
         node[ shape=rect ]
         book_copy[ label="Book Copy" ]
@@ -107,6 +117,8 @@ graph ERDiagram
     /* Author Entity Definition */
     subgraph cluster_author_entity 
         {
+        style=filled;
+        fillcolor=lightblue;
         // Define the entity node
         node[ shape=rect ]
         author[ label="Author" ]
@@ -126,6 +138,8 @@ graph ERDiagram
     /* Publisher Entity Definition */
     subgraph cluster_publisher_entity 
         {
+        style=filled;
+        fillcolor=lightblue;
         // Define the entity node
         node[ shape=rect ]
         publisher[ label="Publisher" ]
@@ -144,6 +158,8 @@ graph ERDiagram
     /* Book Series Entity Definition */
     subgraph cluster_book_series_entity 
         {
+        style=filled;
+        fillcolor=lightblue;
         // Define the entity node
         node[ shape=rect ]
         book_series[ label="Book Series" ]
@@ -161,6 +177,8 @@ graph ERDiagram
     /* Movie Entity Definition */
     subgraph cluster_movie_entity 
         {
+        style=filled;
+        fillcolor=lightblue;
         // Define the entity node
         node[ shape=rect ]
         movie[ label="Movie" ]
@@ -180,6 +198,8 @@ graph ERDiagram
     /* Movie Copy Definition */
     subgraph cluster_movie_copy_entity 
         {
+        style=filled;
+        fillcolor=lightblue;
         // Define the entity node
         node[ shape=rect ]
         movie_copy[ label="Movie Copy" ]
@@ -195,6 +215,8 @@ graph ERDiagram
     /* Director Entity Definition */
     subgraph cluster_director_entity 
         {
+        style=filled;
+        fillcolor=lightblue;
         // Define the entity node
         node[ shape=rect ]
         director[ label="Director" ]
@@ -214,6 +236,8 @@ graph ERDiagram
     /* Studio Entity Definition */
     subgraph cluster_studio_entity 
         {
+        style=filled;
+        fillcolor=lightblue;
         // Define the entity node
         node[ shape=rect ]
         studio[ label="Studio" ]
@@ -231,6 +255,8 @@ graph ERDiagram
     /* Room Entity Definition */
     subgraph cluster_room_entity 
         {
+        style=filled;
+        fillcolor=lightblue;
         // Define the entity node
         node[ shape=rect ]
         room[ label="Room" ]
@@ -248,6 +274,8 @@ graph ERDiagram
     /* Community Event Entity Definition */
     subgraph cluster_community_event_entity 
         {
+        style=filled;
+        fillcolor=lightblue;
         // Define the entity node
         node[ shape=rect ]
         community_event[ label="Community Event" ]
@@ -279,7 +307,7 @@ graph ERDiagram
     subgraph member_is_a_staff_relationship
         {
         node[ shape=triangle orientation=270 ]
-        member_is_a_staff[ label="Is A" ]
+        member_is_a_staff[ label="Is A" , fillcolor=lightgreen, style=filled ]
         
         member -- member_is_a_staff[ ltail=cluster_member_entity, lhead=member_is_a_staff_relationship ]
         member_is_a_staff -- staff[ ltail=member_is_a_staff_relationship, lhead=cluster_staff_entity ]
@@ -291,83 +319,87 @@ graph ERDiagram
     /* Member registers for Community Event Relationships */
     subgraph member_registers_community_event_relationship
         {
+        style=filled;
+        fillcolor="#ffcccc";
         node[ shape=diamond ]
-        member_registers_community_event[ label="Registers" ]
+        member_registers_community_event[ label="Registers", fillcolor="#ffcccc", style=filled ]
         }
         
     /* Staff can organize a community event */
     subgraph staff_organizes_community_event_relationship
         {
         node[ shape=diamond ]
-        staff_organizes_community_event[ label="Organizes" ]
+        staff_organizes_community_event[ label="Organizes", fillcolor="#ffcccc", style=filled ]
         }
         
     /* A material can be a book copy */
     subgraph material_can_be_book_copy_relationship
         {
         node[ shape=diamond ]
-        material_can_be_book_copy[ label="Can Be" ]
+        material_can_be_book_copy[ label="Can Be", fillcolor="#ffcccc", style=filled ]
         }
     
     /* A material can be a movie copy */
     subgraph material_can_be_movie_copy_relationship
         {
         node[ shape=diamond ]
-        material_can_be_movie_copy[ label="Can Be" ]
+        material_can_be_movie_copy[ label="Can Be", fillcolor="#ffcccc", style=filled ]
         }
     
     /* A member can loan a material */
     subgraph member_loans_material_relationship
         {
         node[ shape=diamond ]
-        member_loans_material[ label="Loans" ]
+        member_loans_material[ label="Loans", fillcolor="#ffcccc", style=filled ]
         }
         
     /* A member can reserve a material */
     subgraph member_reserves_material_relationship
         {
         node[ shape=diamond ]
-        member_reserves_material[ label="Reserves" ]
+        member_reserves_material[ label="Reserves", fillcolor="#ffcccc", style=filled ]
         }
     
     /* A member can search for a book */
     subgraph member_searches_book_relationship
         {
         node[ shape=diamond ]
-        member_searches_book[ label="Searches" ]
+        member_searches_book[ label="Searches", fillcolor="#ffcccc", style=filled ]
         }
         
     /* Member can search for a movie */
     subgraph member_searches_movie_relationship
         {
         node[ shape=diamond ]
-        member_searches_movie[ label="Searches" ]
+        member_searches_movie[ label="Searches", fillcolor="#ffcccc", style=filled ]
         }
         
     /* Members can reserve a rooms */
     subgraph member_reserves_room_relationship
         {
         node[ shape=diamond ]
-        member_reserves_room[ label="Reserves" ]
+        member_reserves_room[ label="Reserves", fillcolor="#ffcccc", style=filled ]
         }
         
     /* Authors can write books */
     subgraph author_writes_book_relationship
         {
         node[ shape=diamond ]
-        author_writes_book[ label="Writes" ]
+        author_writes_book[ label="Writes", fillcolor="#ffcccc", style=filled ]
         }
         
     /* Publishers can publish book */
     subgraph publisher_publishes_book_relationship
         {
         node[ shape=diamond ]
-        publisher_publishes_book[ label="Publishes" ]
+        publisher_publishes_book[ label="Publishes", fillcolor="#ffcccc", style=filled ]
         }
         
     /* Books are part of a book series */
-    subgraph book_is_part_of_book_series_relationship
+    subgraph cluster_book_is_part_of_book_series_relationship
         {
+        style=filled;
+        fillcolor="#ffcccc";
         node[ shape=diamond ]
         book_is_part_of_book_series[ label="Is part of" ]
         
@@ -381,14 +413,14 @@ graph ERDiagram
     subgraph director_directs_movie_relationship
         {
         node[ shape=diamond ]
-        director_directs_movie[ label="Directs" ]
+        director_directs_movie[ label="Directs", fillcolor="#ffcccc", style=filled ]
         }
         
     /* Studios can release movies */
     subgraph studio_releases_movie_relationship
         {
         node[ shape=diamond ]
-        studio_releases_movie[ label="Releases" ]
+        studio_releases_movie[ label="Releases", fillcolor="#ffcccc", style=filled ]
         }
         
         
@@ -473,8 +505,8 @@ graph ERDiagram
     /* Group all the Book Series to Book relationships */
     subgraph book_series_to_book
         {
-        book_series -- book_is_part_of_book_series[ ltail=cluster_book_series_entity, lhead=book_is_part_of_book_series_relationship ]
-        book_is_part_of_book_series -- book[ ltail=book_is_part_of_book_series_relationship, lhead=cluster_book_entity ]
+        book_series -- book_is_part_of_book_series[ ltail=cluster_book_series_entity, lhead=cluster_book_is_part_of_book_series_relationship ]
+        book_is_part_of_book_series -- book[ ltail=cluster_book_is_part_of_book_series_relationship, lhead=cluster_book_entity ]
         }
         
     /* Group all the Director to Movie Relationships */
