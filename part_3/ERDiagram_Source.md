@@ -524,29 +524,29 @@ graph ERDiagram
     /* Group all the Director to Movie Relationships */
     subgraph director_to_movie
         {
-        director -- director_directs_movie[ ltail=cluster_director_entity, lhead=director_directs_movie_relationship ]
-        director_directs_movie -- movie[ ltail=director_directs_movie_relationship, lhead=cluster_movie_entity ]
+        director -- director_directs_movie[ ltail=cluster_director_entity, lhead=director_directs_movie_relationship, xlabel="(1..N)", color="black:invis:black" ]
+        director_directs_movie -- movie[ ltail=director_directs_movie_relationship, lhead=cluster_movie_entity, label="(1..M)", color="black:invis:black" ]
         }
         
     /* Group all the Studio to Movie Relationships */
     subgraph studio_to_movie
         {
-        studio -- studio_releases_movie[ ltail=cluster_studio_entity, lhead=studio_releases_movie_relationship ]
-        studio_releases_movie -- movie[ ltail=studio_releases_movie_relationship, lhead=cluster_movie_entity ]
+        studio -- studio_releases_movie[ ltail=cluster_studio_entity, lhead=studio_releases_movie_relationship, label="(1..M)" ]
+        studio_releases_movie -- movie[ ltail=studio_releases_movie_relationship, lhead=cluster_movie_entity, label="(1..1)", color="black:invis:black" ]
         }
         
     /* Group all the book to book copy relationships */
     subgraph book_to_book_copy
         {
-        book -- book_has_book_copy[ ltail=cluster_book_entity, lhead=book_has_book_copy_relationship ]
-        book_has_book_copy -- book_copy[ ltail=book_has_book_copy_relationship, lhead=book_copy_entity ]
+        book -- book_has_book_copy[ ltail=cluster_book_entity, lhead=book_has_book_copy_relationship, label="(1..M)", color="black:invis:black" ]
+        book_has_book_copy -- book_copy[ ltail=book_has_book_copy_relationship, lhead=book_copy_entity, xlabel="(1..1)", color="black:invis:black" ]
         }
         
     /* Group all the movie to movie copy relationships */
     subgraph book_to_book_copy
         {
-        movie -- movie_has_movie_copy[ ltail=cluster_movie_entity, lhead=movie_has_movie_copy_relationship ]
-        movie_has_movie_copy -- movie_copy[ ltail=movie_has_movie_copy_relationship, lhead=movie_copy_entity ]
+        movie -- movie_has_movie_copy[ ltail=cluster_movie_entity, lhead=movie_has_movie_copy_relationship, label="(1..M)", color="black:invis:black" ]
+        movie_has_movie_copy -- movie_copy[ ltail=movie_has_movie_copy_relationship, lhead=movie_copy_entity, xlabel="(1..1)", color="black:invis:black" ]
         }
     }
 ```
