@@ -1,5 +1,3 @@
-To render this code, please got to [Online Graphviz Compiler](https://dreampuf.github.io/GraphvizOnline/?engine=dot#digraph%20G%20%7B%0A%0A%7D) and paste the following code
-```
 graph ERDiagram 
     {
     graph [compound=true];
@@ -98,20 +96,11 @@ graph ERDiagram
         }
         
     /* Book-Copy Entity Definition */
-    subgraph cluster_book_copy_entity 
+    subgraph book_copy_entity 
         {
-        style=filled;
-        fillcolor=lightblue;
         // Define the entity node
         node[ shape=rect ]
-        book_copy[ label="Book Copy" ]
-        
-        // Define the attributes
-        node[ shape=ellipse ]
-        book_copy_id[ label=<<u>ID</u>> ]
-
-        // Link the attributes
-        book_copy -- book_copy_id
+        book_copy[ label="Book Copy", style=filled, fillcolor=lightblue ]
         }
     
     /* Author Entity Definition */
@@ -196,20 +185,11 @@ graph ERDiagram
         }
         
     /* Movie Copy Definition */
-    subgraph cluster_movie_copy_entity 
+    subgraph movie_copy_entity 
         {
-        style=filled;
-        fillcolor=lightblue;
         // Define the entity node
         node[ shape=rect ]
-        movie_copy[ label="Movie Copy" ]
-        
-        // Define the attributes
-        node[ shape=ellipse ]
-        movie_copy_id[ label=<<u>ID</u>> ]
-
-        // Link the attributes
-        movie_copy -- movie_copy_id
+        movie_copy[ label="Movie Copy", style=filled, fillcolor=lightblue ]
         }
         
     /* Director Entity Definition */
@@ -313,6 +293,16 @@ graph ERDiagram
         member_is_a_staff -- staff[ ltail=member_is_a_staff_relationship, lhead=cluster_staff_entity ]
         }
         
+    subgraph copy_is_material_relationship
+        {
+        node[ shape=triangle orientation=270 ]
+        copy_is_a_material[ label="Is A" , fillcolor=lightgreen, style=filled ]
+        
+        material -- copy_is_a_material[ ltail=cluster_material_entity, lhead=copy_is_a_material ]
+        copy_is_a_material -- book_copy[ ltail=copy_is_a_material, lhead=book_copy_entity ]
+        copy_is_a_material -- movie_copy[ ltail=copy_is_a_material, lhead=movie_copy_entity ]
+        }
+        
     /***************************************************************************************
     Relationship Definition
     ***************************************************************************************/  
@@ -331,34 +321,44 @@ graph ERDiagram
         node[ shape=diamond ]
         staff_organizes_community_event[ label="Organizes", fillcolor="#ffcccc", style=filled ]
         }
-        
-    /* A material can be a book copy */
-    subgraph material_can_be_book_copy_relationship
-        {
-        node[ shape=diamond ]
-        material_can_be_book_copy[ label="Can Be", fillcolor="#ffcccc", style=filled ]
-        }
-    
-    /* A material can be a movie copy */
-    subgraph material_can_be_movie_copy_relationship
-        {
-        node[ shape=diamond ]
-        material_can_be_movie_copy[ label="Can Be", fillcolor="#ffcccc", style=filled ]
-        }
     
     /* A member can loan a material */
-    subgraph member_loans_material_relationship
+    subgraph cluster_member_loans_material_relationship
         {
         node[ shape=diamond ]
-        member_loans_material[ label="Loans", fillcolor="#ffcccc", style=filled ]
+        fillcolor="#ffcccc"
+        style=filled
+        member_loans_material[ label="Loans" ]
+        
+        node[ shape=ellipse ]
+        member_loans_material_loan_start_date[ label="Start Date" ]
+        member_loans_material_loan_duration[ label="Duration" ]
+        
+        member_loans_material -- member_loans_material_loan_start_date
+        member_loans_material -- member_loans_material_loan_duration
         }
         
     /* A member can reserve a material */
-    subgraph member_reserves_material_relationship
+    subgraph cluster_member_reserves_material_relationship
         {
         node[ shape=diamond ]
-        member_reserves_material[ label="Reserves", fillcolor="#ffcccc", style=filled ]
+        fillcolor="#ffcccc"
+        style=filled
+        member_reserves_material[ label="Reserves" ]
+        
+        node[ shape=ellipse ]
+        member_reserves_material_reservation_date[ label="Reservation Date" ]
+        
+        member_reserves_material -- member_reserves_material_reservation_date
         }
+        
+    /* A member can reserve a material */
+    subgraph member_donates_material_relationship
+        {
+        node[ shape=diamond ]
+        member_donates_material[ label="Donates", fillcolor="#ffcccc", style=filled ]
+        }
+        
     
     /* A member can search for a book */
     subgraph member_searches_book_relationship
@@ -375,10 +375,19 @@ graph ERDiagram
         }
         
     /* Members can reserve a rooms */
-    subgraph member_reserves_room_relationship
+    subgraph cluster_member_reserves_room_relationship
         {
         node[ shape=diamond ]
-        member_reserves_room[ label="Reserves", fillcolor="#ffcccc", style=filled ]
+        fillcolor="#ffcccc"
+        style=filled
+        member_reserves_room[ label="Reserves"]
+        
+        node[ shape=ellipse ]
+        member_reserves_room_reservation_date[ label="Date" ]
+        member_reserves_room_reservation_duration[ label="Duration" ]
+        
+        member_reserves_room -- member_reserves_room_reservation_date
+        member_reserves_room -- member_reserves_room_reservation_duration
         }
         
     /* Authors can write books */
@@ -423,6 +432,19 @@ graph ERDiagram
         studio_releases_movie[ label="Releases", fillcolor="#ffcccc", style=filled ]
         }
         
+    /* Book can have copies */
+    subgraph book_has_book_copy_relationship
+        {
+        node[ shape=diamond ]
+        book_has_book_copy[ label="Has", fillcolor="#ffcccc", style=filled ]
+        }
+        
+    /* Movie can have copies */
+    subgraph movie_has_movie_copy_relationship
+        {
+        node[ shape=diamond ]
+        movie_has_movie_copy[ label="Has", fillcolor="#ffcccc", style=filled ]
+        }
         
     /***************************************************************************************
     Group Relationship Links
@@ -431,82 +453,71 @@ graph ERDiagram
     subgraph member_to_community_event
         {
         // Members Register for community events
-        member -- member_registers_community_event[ ltail=cluster_member_entity, lhead=member_registers_community_event_relationship ]
-        member_registers_community_event -- community_event[ ltail=member_registers_community_event_relationship, lhead=cluster_community_event_entity ]
+        member -- member_registers_community_event[ ltail=cluster_member_entity, lhead=member_registers_community_event_relationship, label="(0..N)" ]
+        member_registers_community_event -- community_event[ ltail=member_registers_community_event_relationship, lhead=cluster_community_event_entity, label="(1..M)", color="black:invis:black" ]
         }
         
     /* Group all Staff to Community Event relationshiops */
     subgraph staff_to_community_event
         {
         // Staffs Organize community events
-        staff -- staff_organizes_community_event[ ltail=cluster_staff_entity, lhead=staff_organizes_community_event_relationship ]
-        staff_organizes_community_event -- community_event[ ltail=staff_organizes_community_event_relationship, lhead=cluster_community_event_entity ]
-        }
-        
-    /* Group all the Material to Book Copy relationships */
-    subgraph material_to_book_copy
-        {
-        material -- material_can_be_book_copy[ ltail=cluster_material_entity, lhead=material_can_be_book_copy_relationship ]
-        material_can_be_book_copy -- book_copy[ ltail=material_can_be_book_copy_relationship, lhead=cluster_book_copy_entity ]
-        }
-        
-    /* Group all the Material to Movie Copy relationships */
-    subgraph material_to_movie_copy
-        {
-        material -- material_can_be_movie_copy[ ltail=cluster_material_entity, lhead=material_can_be_movie_copy_relationship ]
-        material_can_be_movie_copy -- movie_copy[ ltail=material_can_be_movie_copy_relationship, lhead=cluster_movie_copy_entity ]
+        staff -- staff_organizes_community_event[ ltail=cluster_staff_entity, lhead=staff_organizes_community_event_relationship, xlabel="(0..N)" ]
+        staff_organizes_community_event -- community_event[ ltail=staff_organizes_community_event_relationship, lhead=cluster_community_event_entity, label="(1..M)", color="black:invis:black" ]
         }
         
     /* Group all the Member to Material relationships */
     subgraph member_to_material
         {
-        member -- member_loans_material[ ltail=cluster_member_entity, lhead=member_loans_material_relationship ]
-        member_loans_material -- material[ ltail=member_loans_material_relationship, lhead=cluster_material_entity ]
+        member -- member_loans_material[ ltail=cluster_member_entity, lhead=cluster_member_loans_material_relationship, xlabel="(0..N)" ]
+        member_loans_material -- material[ ltail=cluster_member_loans_material_relationship, lhead=cluster_material_entity, xlabel="(0..1)" ]
         
-        member -- member_reserves_material[ ltail=cluster_member_entity, lhead=member_reserves_material_relationship ]
-        member_reserves_material -- material[ ltail=member_reserves_material_relationship, lhead=cluster_material_entity ]
+        member -- member_reserves_material[ ltail=cluster_member_entity, lhead=cluster_member_reserves_material_relationship, label="(0..N)" ]
+        member_reserves_material -- material[ ltail=cluster_member_reserves_material_relationship, lhead=cluster_material_entity, label="(0..M)" ]
+        
+        member -- member_donates_material[ ltail=cluster_member_entity, lhead=member_donates_material_relationship, xlabel="(0..N)" ]
+        member_donates_material -- material[ ltail=member_donates_material_relationship, lhead=cluster_material_entity, label="(1..1)", color="black:invis:black" ]
         }
         
     /* Group all the Member to Book relationships */
     subgraph member_to_book
         {
-        member -- member_searches_book[ ltail=cluster_member_entity, lhead=member_searches_book_relationship ]
-        member_searches_book -- book[ ltail=member_loans_material_relationship, lhead=cluster_book_entity ]
+        member -- member_searches_book[ ltail=cluster_member_entity, lhead=member_searches_book_relationship, label="(0..N)" ]
+        member_searches_book -- book[ ltail=member_searches_book_relationship, lhead=cluster_book_entity, label="(0..M)" ]
         }
         
     /* Group all the Member to Movie relationships */
     subgraph member_to_movie
         {
-        member -- member_searches_movie[ ltail=cluster_member_entity, lhead=member_searches_movie_relationship ]
-        member_searches_movie -- movie[ ltail=member_searches_movie_relationship, lhead=cluster_movie_entity ]
+        member -- member_searches_movie[ ltail=cluster_member_entity, lhead=member_searches_movie_relationship, label="(0..N)" ]
+        member_searches_movie -- movie[ ltail=member_searches_movie_relationship, lhead=cluster_movie_entity, label="(0..M)" ]
         }
         
     /* Group all the Member to Room relationships */
     subgraph member_to_room
         {
-        member -- member_reserves_room[ ltail=cluster_member_entity, lhead=member_reserves_room_relationship ]
-        member_reserves_room -- room[ ltail=member_reserves_room_relationship, lhead=cluster_room_entity ]
+        member -- member_reserves_room[ ltail=cluster_member_entity, lhead=cluster_member_reserves_room_relationship, label="(0..N)" ]
+        member_reserves_room -- room[ ltail=cluster_member_reserves_room_relationship, lhead=cluster_room_entity, label="(0..1)" ]
         }
         
     /* Group all the Author to Book relationships */
     subgraph author_to_book
         {
-        author -- author_writes_book[ ltail=cluster_author_entity, lhead=author_writes_book_relationship ]
-        author_writes_book -- book[ ltail=author_writes_book_relationship, lhead=cluster_book_entity ]
+        author -- author_writes_book[ ltail=cluster_author_entity, lhead=author_writes_book_relationship, xlabel="(1..N)", color="black:invis:black" ]
+        author_writes_book -- book[ ltail=author_writes_book_relationship, lhead=cluster_book_entity, label="(1..M)", color="black:invis:black" ]
         }
         
     /* Group all the Publisher to Book Relationships */
     subgraph publisher_to_book
         {
-        publisher -- publisher_publishes_book[ ltail=cluster_publisher_entity, lhead=publisher_publishes_book_relationship ]
-        publisher_publishes_book -- book[ ltail=publisher_publishes_book_relationship, lhead=cluster_book_entity ]
+        publisher -- publisher_publishes_book[ ltail=cluster_publisher_entity, lhead=publisher_publishes_book_relationship, label="(1..M)" ]
+        publisher_publishes_book -- book[ ltail=publisher_publishes_book_relationship, lhead=cluster_book_entity, label="(1..1)", color="black:invis:black" ]
         }
         
     /* Group all the Book Series to Book relationships */
     subgraph book_series_to_book
         {
-        book_series -- book_is_part_of_book_series[ ltail=cluster_book_series_entity, lhead=cluster_book_is_part_of_book_series_relationship ]
-        book_is_part_of_book_series -- book[ ltail=cluster_book_is_part_of_book_series_relationship, lhead=cluster_book_entity ]
+        book_series -- book_is_part_of_book_series[ ltail=cluster_book_series_entity, lhead=cluster_book_is_part_of_book_series_relationship, color="black:invis:black", xlabel="(1..M)" ]
+        book_is_part_of_book_series -- book[ ltail=cluster_book_is_part_of_book_series_relationship, lhead=cluster_book_entity, label="(0..1)" ]
         }
         
     /* Group all the Director to Movie Relationships */
@@ -522,5 +533,18 @@ graph ERDiagram
         studio -- studio_releases_movie[ ltail=cluster_studio_entity, lhead=studio_releases_movie_relationship ]
         studio_releases_movie -- movie[ ltail=studio_releases_movie_relationship, lhead=cluster_movie_entity ]
         }
+        
+    /* Group all the book to book copy relationships */
+    subgraph book_to_book_copy
+        {
+        book -- book_has_book_copy[ ltail=cluster_book_entity, lhead=book_has_book_copy_relationship ]
+        book_has_book_copy -- book_copy[ ltail=book_has_book_copy_relationship, lhead=book_copy_entity ]
+        }
+        
+    /* Group all the movie to movie copy relationships */
+    subgraph book_to_book_copy
+        {
+        movie -- movie_has_movie_copy[ ltail=cluster_movie_entity, lhead=movie_has_movie_copy_relationship ]
+        movie_has_movie_copy -- movie_copy[ ltail=movie_has_movie_copy_relationship, lhead=movie_copy_entity ]
+        }
     }
-```
