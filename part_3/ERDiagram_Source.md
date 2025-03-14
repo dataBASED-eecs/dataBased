@@ -1,3 +1,4 @@
+```
 graph ERDiagram 
     {
     graph [compound=true];
@@ -548,3 +549,4 @@ graph ERDiagram
         movie_has_movie_copy -- movie_copy[ ltail=movie_has_movie_copy_relationship, lhead=movie_copy_entity ]
         }
     }
+```
