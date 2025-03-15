@@ -108,7 +108,7 @@ This project consists of the development of a database system to manage library 
 3. Movie Copy (Inherits from Material): These are physical instances of an abstract movie
 ### Relationships
 1. Member RESERVES Room
-   	- Multiplicties
+   	- Multiplicities
    		- 1 Member can reserve (0..N) Rooms
    		- 1 Room can be reserved by (0..1) People
    	- Attributes
@@ -124,6 +124,55 @@ This project consists of the development of a database system to manage library 
 	- Multiplicities
 		- 1 Staff can organize (0..N) Community Events
 		- 1 Community Event can registered by (1..M) Staff
+4. Member LOANS Material
+   	- Multiplicities
+   		- 1 Member can loan (0..N) material
+   		- 1 Material can be loaned by (0..1) Members
+   	- Attributes
+   		- Duration
+   			- Numeric Value (in Minutes) where Duration >= 15 and Duration <= 60
+   		- Start Date
+			- Numeric Value in Epoch Time
+5. Member DONATES Material
+   	- Multiplicities
+   		- 1 Member can donate (0..N) material
+   		- 1 Material can be donated by (1..1) Members
+6. Member RESERVES Material
+   	- Multiplicities
+   		- 1 Member can loan (0..N) material
+   		- 1 Material can be loaned by (1..1) Members
+7. Member SEARCHES Book
+   	- Multiplicities
+   		- 1 Member can search (0..N) books
+   		- 1 book can be searched by (0..M) Members
+8. Member SEARCHES Movie
+   	- Multiplicities
+   		- 1 Member can search (0..N) movies
+   		- 1 movie can be searched by (0..M) Members
+9. Book HAS Book Copy
+   	- Multiplicities
+   	  	- 1 Book has (1..N) Book Copies
+   	  	- 1 Book Copy is associated with (1..1) Books
+10. Movie HAS Movie Copy
+   	- Multiplicities
+   	  	- 1 Movie has (1..N) Movie Copies
+   	  	- 1 Movie Copy is associated with (1..1) Movies
+11. Author WRITES Book
+	- Multiplicities
+		- 1 Author can write (1..N) books
+		- 1 Book can be written (1..M) Authors
+12. Publisher PUBLISHES Book
+	- Multiplicities
+		- 1 Publisher can publish (1..N) Books
+		- 1 Book can be published by (1..1) Publishers
+11. Director DIRECTS Movie
+	- Multiplicities
+		- 1 Director can direct (1..N) Movies
+		- 1 Movie can be directed (1..M) Directors
+12. Studio RELEASES Movie
+	- Multiplicities
+		- 1 Studio can release (1..N) Movies
+		- 1 Movie can be released by (1..1) Studios
 ## Entity/Relationship Diagram
 The source code for the following diagram is located at [Reference File]( ERDiagram_Source.md )<br/>
 The ER Diagram can be found [Here](ER_Diagram_FINAL.png)
