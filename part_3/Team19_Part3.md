@@ -111,10 +111,19 @@ This project consists of the development of a database system to manage library 
    	- Multiplicties
    		- 1 Member can reserve (0..N) Rooms
    		- 1 Room can be reserved by (0..1) People
-   	- Duration
-   		- Numeric Value (in Minutes) where Duration >= 15 and Duration <= 60
-   	 - 
-
+   	- Attributes
+   		- Duration
+   			- Numeric Value (in Minutes) where Duration >= 15 and Duration <= 60
+   		- Date
+			- Numeric Value in Epoch Time
+2. Member REGISTERS for Community Event
+	- Multiplicities
+		- 1 Member can register for (0..N) Community Events
+		- 1 Community Event can registered by (1..M) Members
+3. Staff ORGANIZES Community Event
+	- Multiplicities
+		- 1 Staff can organize (0..N) Community Events
+		- 1 Community Event can registered by (1..M) Staff
 ## Entity/Relationship Diagram
 The source code for the following diagram is located at [Reference File]( ERDiagram_Source.md )<br/>
 The ER Diagram can be found [Here](ER_Diagram_FINAL.png)
