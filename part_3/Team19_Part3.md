@@ -11,9 +11,10 @@ This project consists of the development of a database system to manage library 
 	- A library user who can check out materials and participate in community events.
 - Librarian / Library Staff 
 	- A staff member who is responsible for maintaining the library's collection, processing checkouts/returns, and managing late fees.
-
 - Community Event 
 	- A scheduled gathering or program held at the library that members can register for and attend.
+
+NOTE: Other definitions for entities and relationships are defined at the intial mention.
 
 ## Entity/Relationship Information
 ### Standalone Entities
@@ -176,3 +177,8 @@ This project consists of the development of a database system to manage library 
 ## Entity/Relationship Diagram
 The source code for the following diagram is located at [Reference File]( ERDiagram_Source.md )<br/>
 The ER Diagram can be found [Here](ER_Diagram_FINAL.png)
+
+## Meeting Logs
+**Reference Document:** [030725](../documentation/meeting_logs/030725.md)<br/>
+**Reference Document:** [031025](../documentation/meeting_logs/031025.md)<br/>
+**Reference Document:** [031424](../documentation/meeting_logs/031425.md)
