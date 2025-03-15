@@ -1,4 +1,4 @@
-# Team 19 Part 3
+# EECS 447 Final Project Part 3
 ## Introduction
 ### Project Overview
 The purpose of our Library Management System is to provide an effective method for knowledge sharing, community meeting, and community events within the library. The system enables members to check out and return materials while tracking overdue fees. Additionaly, members can view and regsiter for community events. Library staff can manage inventory, oversee late fees, and organize events. 
@@ -15,9 +15,106 @@ This project consists of the development of a database system to manage library 
 - Community Event 
 	- A scheduled gathering or program held at the library that members can register for and attend.
 
-
-## How To
-The source code for the following diagram is located at [Reference File]( ERDiagram_Source.md ) 
 ## Entity/Relationship Information
+### Standalone Entities
+1. Member: All people who use the library, including people who work there
+	- Member ID (Primary Key)
+		- Numeric Type where ID >= 0 and ID < ∞
+	- Date of Birth
+		- Numeric In Epoch Time
+	- Outstanding Balance
+		- Floating Point Number (Two Decimal Places) where Balance <= 0
+	- Email
+		- String Compliant with RFC522
+	- Last Name
+		- Variable Character String with Max Size of 100
+	- First Name
+		- Variable Character String with Max Size of 100
+2. Library Room: A place where an individual can study and use to their liking
+	- Number (Primary Key)
+		- Numeric Type where Number >= 0
+	- Room Capacity
+		 - Numeric Type where Capacity >= 1
+3. Community Event: An event that is held at the library location or created in association with the library
+	- ID (Primary Key)
+		- Numeric Type where ID >= 0 and ID < ∞
+	- Organizer First Name
+		- Variable Character String with Max Size of 100
+	- Organizer Last Name
+		- Variable Character String with Max Size of 100
+	- Event Start Time
+		- Numeric In Epoch Time
+	- Event Time
+		- Numeric In Epoch Time
+	- Longitudinal Location
+		- Numeric Value where Longitude >= -180 and Longitude <= 180
+	- Latitudinal Location
+		- Numeric Value where Latitude >= -90 and Latitude <= 90
+3. Material: This is the physical instance of something that can be checked out from the library
+	- ID (Primary Key)
+		- Numeric Type where ID >= 0 and ID < ∞
+3. Book: A written artifact registered in the ISBN Registry
+	- ISBN (Primary Key)
+		- 13 Digit Numeric Value to support ISBN-10 and ISBN-13
+	- Title
+		- Variable Character String with Max of 100 Characters
+4. Book Series: A Collection of Books that are intentionally grouped together
+	- ID (Primary Key)
+   		- Numeric Type where ID >= 0 and ID < ∞
+	- Name
+		- Variable Character String with Max Size of 100
+6. Author: A person who writes a book
+   	- ID (Primary Key)
+		- Numeric Type where ID >= 0 and ID < ∞
+  	- Last Name
+		- Variable Character String with Max Size of 100
+	- First Name
+		- Variable Character String with Max Size of 100
+7. Publisher: An entity that is reponsible for managing and publishing books
+   	- ID (Primary Key)
+   		- Numeric Type where ID >= 0 and ID < ∞
+	- Name
+		- Variable Character String with Max Size of 100
+8. Movie: A visual artifact registered in the ISAN Registry
+	- ISAN (Primary Key)
+		- Alphanumeric String that is 24 Characters
+	- Release Date
+		- Numeric value in Epoch Time
+	- Title
+		- Variable Character String with Max of 100 Characters
+9. Director: A person who directs a movie
+   	- ID (Primary Key)
+		- Numeric Type where ID >= 0 and ID < ∞
+  	- Last Name
+		- Variable Character String with Max Size of 100
+	- First Name
+		- Variable Character String with Max Size of 100
+10. Studio: An entity that is reponsible for managing and releasing movies
+   	- ID (Primary Key)
+   		- Numeric Type where ID >= 0 and ID < ∞
+	- Name
+		- Variable Character String with Max Size of 100
+### Generalized/Specialized Entities
+1. Staff (Inherits from Member): These are people who work at the library
+	- Work Email
+		- String Compliant with RFC522
+	- Work Phone #
+		- Numeric Value that is at most 15 digits
+	- Start Date
+		- Numeric in Epoch Time
+	- Salary
+		- Numeric value where Salary >= 0
+2. Book Copy (Inherits from Material): These are physical instances of an abstract book
+3. Movie Copy (Inherits from Material): These are physical instances of an abstract movie
+### Relationships
+1. Member RESERVES Room
+   	- Multiplicties
+   		- 1 Member can reserve (0..N) Rooms
+   		- 1 Room can be reserved by (0..1) People
+   	- Duration
+   		- Numeric Value (in Minutes) where Duration >= 15 and Duration <= 60
+   	 - 
+
 ## Entity/Relationship Diagram
+The source code for the following diagram is located at [Reference File]( ERDiagram_Source.md )<br/>
 The ER Diagram can be found [Here](ER_Diagram_FINAL.png)
