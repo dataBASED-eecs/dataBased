@@ -54,7 +54,7 @@
 |-|-|-|
 | Date_of_Birth         | DATE | The date the member was born |
 | Member_ID             | INT | The unique id of the member |
-| Outstanding_Balence   | DECIMAL(6,2) | The amount the member owes to the library in dolars |
+| Outstanding_Balance   | DECIMAL(6,2) | The amount the member owes to the library in dolars |
 | Email | TEXT | The email of the member |
 | First_Name | TEXT | The first name of the member |
 | Last_Name | TEXT | The last name of the member |
