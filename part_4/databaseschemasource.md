@@ -16,12 +16,12 @@ digraph G {
                 <TD COLSPAN="1" ALIGN="LEFT" BORDER="0"><B>Member</B></TD>
             </TR>
             <TR>
-                <TD PORT="member_member_id" BGCOLOR="lightblue"><U>Member ID</U></TD>
-                <TD PORT="member_dob" BGCOLOR="lightblue">Date of Birth</TD>
-                <TD PORT="member_fname" BGCOLOR="lightblue">First Name</TD>
-                <TD PORT="member_lname" BGCOLOR="lightblue">Last Name</TD>
+                <TD PORT="member_member_id" BGCOLOR="lightblue"><U>Member_ID</U></TD>
+                <TD PORT="member_dob" BGCOLOR="lightblue">Date_of_Birth</TD>
+                <TD PORT="member_fname" BGCOLOR="lightblue">First_Name</TD>
+                <TD PORT="member_lname" BGCOLOR="lightblue">Last_Name</TD>
                 <TD PORT="member_email" BGCOLOR="lightblue">Email</TD>
-                <TD PORT="member_balance" BGCOLOR="lightblue">Outstanding Balance</TD>
+                <TD PORT="member_balance" BGCOLOR="lightblue">Outstanding_Balance</TD>
             </TR>
         </TABLE>>];
 
@@ -32,16 +32,16 @@ digraph G {
                 <TD COLSPAN="1" ALIGN="LEFT" BORDER="0"><B>Staff</B></TD>
             </TR>
             <TR>
-                <TD PORT="member_member_id" BGCOLOR="lightblue"><U>Member ID</U></TD>
-                <TD PORT="member_dob" BGCOLOR="lightblue">Date of Birth</TD>
-                <TD PORT="member_fname" BGCOLOR="lightblue">First Name</TD>
-                <TD PORT="member_lname" BGCOLOR="lightblue">Last Name</TD>
+                <TD PORT="member_member_id" BGCOLOR="lightblue"><U>Member_ID</U></TD>
+                <TD PORT="member_dob" BGCOLOR="lightblue">Date_of_Birth</TD>
+                <TD PORT="member_fname" BGCOLOR="lightblue">First_Name</TD>
+                <TD PORT="member_lname" BGCOLOR="lightblue">Last_Name</TD>
                 <TD PORT="member_email" BGCOLOR="lightblue">Email</TD>
-                <TD PORT="member_balance" BGCOLOR="lightblue">Outstanding Balance</TD>
-                <TD PORT="staff_work_phone_number" BGCOLOR="lightblue">Work Phone</TD>
+                <TD PORT="member_balance" BGCOLOR="lightblue">Outstanding_Balance</TD>
+                <TD PORT="staff_work_phone_number" BGCOLOR="lightblue">Work_Phone</TD>
                 <TD PORT="staff_salary" BGCOLOR="lightblue">Salary</TD>
-                <TD PORT="staff_work_email" BGCOLOR="lightblue">Work Email</TD>
-                <TD PORT="staff_start_date" BGCOLOR="lightblue">Start Date</TD>
+                <TD PORT="staff_work_email" BGCOLOR="lightblue">Work_Email</TD>
+                <TD PORT="staff_start_date" BGCOLOR="lightblue">Start_Date</TD>
             </TR>
         </TABLE>>];
 
@@ -72,7 +72,7 @@ digraph G {
     book_copy [label=<
         <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
             <TR>
-                <TD COLSPAN="1" ALIGN="LEFT" BORDER="0"><B>Book Copy</B></TD>
+                <TD COLSPAN="1" ALIGN="LEFT" BORDER="0"><B>Book_Copy</B></TD>
             </TR>
             <TR>
                 <TD PORT="material_id" BGCOLOR="lightblue"><U>ID</U></TD>
@@ -87,8 +87,8 @@ digraph G {
             </TR>
             <TR>
                 <TD PORT="author_id" BGCOLOR="lightblue"><U>ID</U></TD>
-                <TD PORT="author_fname" BGCOLOR="lightblue">First Name</TD>
-                <TD PORT="author_lname" BGCOLOR="lightblue">Last Name</TD>
+                <TD PORT="author_fname" BGCOLOR="lightblue">First_Name</TD>
+                <TD PORT="author_lname" BGCOLOR="lightblue">Last_Name</TD>
             </TR>
         </TABLE>>];
         
@@ -108,7 +108,7 @@ digraph G {
     book_series [label=<
         <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
             <TR>
-                <TD COLSPAN="1" ALIGN="LEFT" BORDER="0"><B>Book Series</B></TD>
+                <TD COLSPAN="1" ALIGN="LEFT" BORDER="0"><B>Book_Series</B></TD>
             </TR>
             <TR>
                 <TD PORT="book_series_id" BGCOLOR="lightblue"><U>ID</U></TD>
@@ -125,7 +125,6 @@ digraph G {
             <TR>
                 <TD PORT="movie_isan" BGCOLOR="lightblue"><U>ISAN</U></TD>
                 <TD PORT="movie_title" BGCOLOR="lightblue">Title</TD>
-                <TD PORT="movie_release_date" BGCOLOR="lightblue">Release Date</TD>
             </TR>
         </TABLE>>];
         
@@ -133,7 +132,7 @@ digraph G {
     movie_copy [label=<
         <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
             <TR>
-                <TD COLSPAN="1" ALIGN="LEFT" BORDER="0"><B>Movie Copy</B></TD>
+                <TD COLSPAN="1" ALIGN="LEFT" BORDER="0"><B>Movie_Copy</B></TD>
             </TR>
             <TR>
                 <TD PORT="movie_id" BGCOLOR="lightblue"><U>ID</U></TD>
@@ -148,8 +147,8 @@ digraph G {
             </TR>
             <TR>
                 <TD PORT="director_id" BGCOLOR="lightblue"><U>ID</U></TD>
-                <TD PORT="director_fname" BGCOLOR="lightblue">First Name</TD>
-                <TD PORT="director_lname" BGCOLOR="lightblue">Last Name</TD>
+                <TD PORT="director_fname" BGCOLOR="lightblue">First_Name</TD>
+                <TD PORT="director_lname" BGCOLOR="lightblue">Last_Name</TD>
             </TR>
         </TABLE>>];
         
@@ -181,16 +180,16 @@ digraph G {
     community_event [label=<
         <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
             <TR>
-                <TD COLSPAN="1" ALIGN="LEFT" BORDER="0"><B>Community Event</B></TD>
+                <TD COLSPAN="1" ALIGN="LEFT" BORDER="0"><B>Community_Event</B></TD>
             </TR>
             <TR>
                 <TD PORT="community_event_id" BGCOLOR="lightblue"><U>ID</U></TD>
-                <TD PORT="community_event_organizer_fname" BGCOLOR="lightblue">Organizer First Name</TD>
-                <TD PORT="community_event_organizer_lname" BGCOLOR="lightblue">Organizer Last Name</TD>
-                <TD PORT="community_event_start_time" BGCOLOR="lightblue">Start Time</TD>
-                <TD PORT="community_event_end_time" BGCOLOR="lightblue">End Time</TD>
-                <TD PORT="community_event_longitudinal_location" BGCOLOR="lightblue">Longitudinal Location</TD>
-                <TD PORT="community_event_latitudinal_location" BGCOLOR="lightblue">Latitudinal Location</TD>
+                <TD PORT="community_event_organizer_fname" BGCOLOR="lightblue">Organizer_First_Name</TD>
+                <TD PORT="community_event_organizer_lname" BGCOLOR="lightblue">Organizer_Last_Name</TD>
+                <TD PORT="community_event_start_time" BGCOLOR="lightblue">Start_Time</TD>
+                <TD PORT="community_event_end_time" BGCOLOR="lightblue">End_Time</TD>
+                <TD PORT="community_event_longitudinal_location" BGCOLOR="lightblue">Longitude</TD>
+                <TD PORT="community_event_latitudinal_location" BGCOLOR="lightblue">Latitude</TD>
             </TR>
         </TABLE>>];
         
@@ -204,8 +203,8 @@ digraph G {
                 <TD COLSPAN="1" ALIGN="LEFT" BORDER="0"><B>Registers</B></TD>
             </TR>
             <TR>
-                <TD PORT="member_id" BGCOLOR="#ffcccc"><U>Member ID</U></TD>
-                <TD PORT="community_event_id" BGCOLOR="#ffcccc"><U>Community Event ID</U></TD>
+                <TD PORT="member_id" BGCOLOR="#ffcccc"><U>Member_ID</U></TD>
+                <TD PORT="community_event_id" BGCOLOR="#ffcccc"><U>Community_Event_ID</U></TD>
             </TR>
         </TABLE>>];
         
@@ -216,8 +215,8 @@ digraph G {
                 <TD COLSPAN="1" ALIGN="LEFT" BORDER="0"><B>Organizes</B></TD>
             </TR>
             <TR>
-                <TD PORT="member_id" BGCOLOR="#ffcccc"><U>Staff ID</U></TD>
-                <TD PORT="community_event_id" BGCOLOR="#ffcccc"><U>Community Event ID</U></TD>
+                <TD PORT="member_id" BGCOLOR="#ffcccc"><U>Staff_ID</U></TD>
+                <TD PORT="community_event_id" BGCOLOR="#ffcccc"><U>Community_Event_ID</U></TD>
             </TR>
         </TABLE>>];
         
@@ -228,9 +227,9 @@ digraph G {
                 <TD COLSPAN="1" ALIGN="LEFT" BORDER="0"><B>Loans</B></TD>
             </TR>
             <TR>
-                <TD PORT="member_id" BGCOLOR="#ffcccc"><U>Member ID</U></TD>
-                <TD PORT="material_id" BGCOLOR="#ffcccc"><U>Material ID</U></TD>
-                <TD PORT="start_date" BGCOLOR="#ffcccc">Start Date</TD>
+                <TD PORT="member_id" BGCOLOR="#ffcccc"><U>Member_ID</U></TD>
+                <TD PORT="material_id" BGCOLOR="#ffcccc"><U>Material_ID</U></TD>
+                <TD PORT="start_date" BGCOLOR="#ffcccc">Start_Date</TD>
                 <TD PORT="duration" BGCOLOR="#ffcccc">Duration</TD>
             </TR>
         </TABLE>>];
@@ -239,12 +238,12 @@ digraph G {
     member_reserves_material [label=<
         <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
             <TR>
-                <TD COLSPAN="1" ALIGN="LEFT" BORDER="0"><B>Reserves Material</B></TD>
+                <TD COLSPAN="1" ALIGN="LEFT" BORDER="0"><B>Reserves_Material</B></TD>
             </TR>
             <TR>
-                <TD PORT="member_id" BGCOLOR="#ffcccc"><U>Member ID</U></TD>
-                <TD PORT="material_id" BGCOLOR="#ffcccc"><U>Material ID</U></TD>
-                <TD PORT="reservation_date" BGCOLOR="#ffcccc">Reservation Date</TD>
+                <TD PORT="member_id" BGCOLOR="#ffcccc"><U>Member_ID</U></TD>
+                <TD PORT="material_id" BGCOLOR="#ffcccc"><U>Material_ID</U></TD>
+                <TD PORT="reservation_date" BGCOLOR="#ffcccc">Reservation_Date</TD>
             </TR>
         </TABLE>>];
         
@@ -255,8 +254,8 @@ digraph G {
                 <TD COLSPAN="1" ALIGN="LEFT" BORDER="0"><B>Donates</B></TD>
             </TR>
             <TR>
-                <TD PORT="member_id" BGCOLOR="#ffcccc">Member ID</TD>
-                <TD PORT="material_id" BGCOLOR="#ffcccc"><U>Material ID</U></TD>
+                <TD PORT="member_id" BGCOLOR="#ffcccc">Member_ID</TD>
+                <TD PORT="material_id" BGCOLOR="#ffcccc"><U>Material_ID</U></TD>
             </TR>
         </TABLE>>];
     
@@ -264,11 +263,11 @@ digraph G {
     member_searches_book [label=<
         <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
             <TR>
-                <TD COLSPAN="1" ALIGN="LEFT" BORDER="0"><B>Searches Book</B></TD>
+                <TD COLSPAN="1" ALIGN="LEFT" BORDER="0"><B>Searches_Book</B></TD>
             </TR>
             <TR>
-                <TD PORT="member_id" BGCOLOR="#ffcccc"><U>Member ID</U></TD>
-                <TD PORT="book_id" BGCOLOR="#ffcccc"><U>Book ID</U></TD>
+                <TD PORT="member_id" BGCOLOR="#ffcccc"><U>Member_ID</U></TD>
+                <TD PORT="book_id" BGCOLOR="#ffcccc"><U>Book_ID</U></TD>
             </TR>
         </TABLE>>];
     
@@ -276,11 +275,11 @@ digraph G {
     member_searches_movie [label=<
         <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
             <TR>
-                <TD COLSPAN="1" ALIGN="LEFT" BORDER="0"><B>Searches Movie</B></TD>
+                <TD COLSPAN="1" ALIGN="LEFT" BORDER="0"><B>Searches_Movie</B></TD>
             </TR>
             <TR>
-                <TD PORT="member_id" BGCOLOR="#ffcccc"><U>Member ID</U></TD>
-                <TD PORT="movie_id" BGCOLOR="#ffcccc"><U>Movie ID</U></TD>
+                <TD PORT="member_id" BGCOLOR="#ffcccc"><U>Member_ID</U></TD>
+                <TD PORT="movie_id" BGCOLOR="#ffcccc"><U>Movie_ID</U></TD>
             </TR>
         </TABLE>>];
     
@@ -288,11 +287,11 @@ digraph G {
     member_reserves_room [label=<
         <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
             <TR>
-                <TD COLSPAN="1" ALIGN="LEFT" BORDER="0"><B>Reserves Room</B></TD>
+                <TD COLSPAN="1" ALIGN="LEFT" BORDER="0"><B>Reserves_Room</B></TD>
             </TR>
             <TR>
-                <TD PORT="member_id" BGCOLOR="#ffcccc">Member ID</TD>
-                <TD PORT="room_id" BGCOLOR="#ffcccc"><U>Room ID</U></TD>
+                <TD PORT="member_id" BGCOLOR="#ffcccc">Member_ID</TD>
+                <TD PORT="room_id" BGCOLOR="#ffcccc"><U>Room_ID</U></TD>
                 <TD PORT="date" BGCOLOR="#ffcccc">Date</TD>
                 <TD PORT="duration" BGCOLOR="#ffcccc">Duration</TD>
             </TR>
@@ -305,8 +304,8 @@ digraph G {
                 <TD COLSPAN="1" ALIGN="LEFT" BORDER="0"><B>Writes</B></TD>
             </TR>
             <TR>
-                <TD PORT="author_id" BGCOLOR="#ffcccc"><U>Author ID</U></TD>
-                <TD PORT="book_id" BGCOLOR="#ffcccc"><U>Book ID</U></TD>
+                <TD PORT="author_id" BGCOLOR="#ffcccc"><U>Author_ID</U></TD>
+                <TD PORT="book_id" BGCOLOR="#ffcccc"><U>Book_ID</U></TD>
             </TR>
         </TABLE>>];
         
@@ -314,11 +313,12 @@ digraph G {
     publisher_publishes_book [label=<
         <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
             <TR>
-                <TD COLSPAN="1" ALIGN="LEFT" BORDER="0"><B>Publisher</B></TD>
+                <TD COLSPAN="1" ALIGN="LEFT" BORDER="0"><B>Publishes</B></TD>
             </TR>
             <TR>
-                <TD PORT="publisher_id" BGCOLOR="#ffcccc">Publisher ID</TD>
-                <TD PORT="book_id" BGCOLOR="#ffcccc"><U>Book ID</U></TD>
+                <TD PORT="publisher_id" BGCOLOR="#ffcccc">Publisher_ID</TD>
+                <TD PORT="book_id" BGCOLOR="#ffcccc"><U>Book_ID</U></TD>
+                <TD PORT="publish_date" BGCOLOR="#ffcccc">Publish_Date</TD>
             </TR>
         </TABLE>>];
         
@@ -326,11 +326,12 @@ digraph G {
     book_is_part_of_book_series [label=<
         <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
             <TR>
-                <TD COLSPAN="1" ALIGN="LEFT" BORDER="0"><B>Is Part of</B></TD>
+                <TD COLSPAN="1" ALIGN="LEFT" BORDER="0"><B>Is_Part_Of</B></TD>
             </TR>
             <TR>
-                <TD PORT="book_series_id" BGCOLOR="#ffcccc">Book Series ID</TD>
-                <TD PORT="book_id" BGCOLOR="#ffcccc"><U>Book ID</U></TD>
+                <TD PORT="book_series_id" BGCOLOR="#ffcccc">Book_Series_ID</TD>
+                <TD PORT="book_id" BGCOLOR="#ffcccc"><U>Book_ID</U></TD>
+                <TD PORT="book_series_order" BGCOLOR="#ffcccc">Order</TD>
             </TR>
         </TABLE>>];
         
@@ -341,8 +342,8 @@ digraph G {
                 <TD COLSPAN="1" ALIGN="LEFT" BORDER="0"><B>Directs</B></TD>
             </TR>
             <TR>
-                <TD PORT="author_id" BGCOLOR="#ffcccc"><U>Director ID</U></TD>
-                <TD PORT="book_id" BGCOLOR="#ffcccc"><U>Movie ID</U></TD>
+                <TD PORT="author_id" BGCOLOR="#ffcccc"><U>Director_ID</U></TD>
+                <TD PORT="book_id" BGCOLOR="#ffcccc"><U>Movie_ID</U></TD>
             </TR>
         </TABLE>>];
         
@@ -353,8 +354,9 @@ digraph G {
                 <TD COLSPAN="1" ALIGN="LEFT" BORDER="0"><B>Releases</B></TD>
             </TR>
             <TR>
-                <TD PORT="studio_id" BGCOLOR="#ffcccc">Studio ID</TD>
-                <TD PORT="movie_id" BGCOLOR="#ffcccc"><U>Movie ID</U></TD>
+                <TD PORT="studio_id" BGCOLOR="#ffcccc">Studio_ID</TD>
+                <TD PORT="movie_id" BGCOLOR="#ffcccc"><U>Movie_ID</U></TD>
+                <TD PORT="release_date" BGCOLOR="#ffcccc">Release_Date</TD>
             </TR>
         </TABLE>>];
         
@@ -362,11 +364,11 @@ digraph G {
     book_has_book_copy [label=<
         <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
             <TR>
-                <TD COLSPAN="1" ALIGN="LEFT" BORDER="0"><B>[Book] Has</B></TD>
+                <TD COLSPAN="1" ALIGN="LEFT" BORDER="0"><B>Book_Has</B></TD>
             </TR>
             <TR>
-                <TD PORT="book_id" BGCOLOR="#ffcccc"><U>Book ID</U></TD>
-                <TD PORT="book_copy_id" BGCOLOR="#ffcccc">Copy ID</TD>
+                <TD PORT="book_id" BGCOLOR="#ffcccc"><U>Book_ID</U></TD>
+                <TD PORT="book_copy_id" BGCOLOR="#ffcccc">Copy_ID</TD>
             </TR>
         </TABLE>>];
         
@@ -374,11 +376,11 @@ digraph G {
     movie_has_movie_copy [label=<
         <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
             <TR>
-                <TD COLSPAN="1" ALIGN="LEFT" BORDER="0"><B>[Movie] Has</B></TD>
+                <TD COLSPAN="1" ALIGN="LEFT" BORDER="0"><B>Movie_Has</B></TD>
             </TR>
             <TR>
-                <TD PORT="movie_id" BGCOLOR="#ffcccc"><U>Movie ID</U></TD>
-                <TD PORT="movie_copy_id" BGCOLOR="#ffcccc">Copy ID</TD>
+                <TD PORT="movie_id" BGCOLOR="#ffcccc"><U>Movie_ID</U></TD>
+                <TD PORT="movie_copy_id" BGCOLOR="#ffcccc">Copy_ID</TD>
             </TR>
         </TABLE>>];
     
