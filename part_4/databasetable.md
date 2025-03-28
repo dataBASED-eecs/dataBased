@@ -19,6 +19,12 @@
 | Work Phone # | VARCHAR(15) | The phone number of the staff member |
 | Start Date | DATE | The date the staff member started working for the library |
 | Work Email | TEXT | The work email of the staff member |
+| Date of Birth         | DATE | The date the member was born |
+| Member Id             | INT | The unique id of the member. This is a foreign key into the Member table |
+| Outstanding Balence   | DECIMAL(6,2) | The amount the member owes to the library in dolars |
+| Email | TEXT | The email of the member |
+| First Name | TEXT | The first name of the member |
+| Last Name | TEXT | The last name of the member |
 
 ## Organizes
 | Attribute Name        | Data Type | Description |
@@ -101,7 +107,7 @@
 ## Book Copy
 | Attribute Name        | Data Type | Description |
 |-|-|-|
-| ID | INT | The unique id of the movie copy|
+| ID | INT | The unique id of the movie copy. This is a foreign key into the material table |
 
 ## Has
 | Attribute Name        | Data Type | Description |
@@ -168,7 +174,7 @@
 ## Movie Copy
 | Attribute Name        | Data Type | Description |
 |-|-|-|
-| ID | INT | The unique id of the movie copy |
+| ID | INT | The unique id of the movie copy. This is a foreign key into the material table |
 
 ## Has
 | Attribute Name        | Data Type | Description |
