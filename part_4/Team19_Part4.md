@@ -1,7 +1,7 @@
 # EECS 447 Final Project Part 4
----
+
 ## Introduction
----
+
 ### Project Overview
 
 The purpose of our Library Management System is to provide an effective method for knowledge sharing, community meeting, and community events within the library. The system enables members to check out and return materials while tracking overdue fees. Additionally, members can view and register for community events. Library staff can manage inventory, oversee late fees, and organize events.
