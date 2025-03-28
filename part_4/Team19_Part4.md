@@ -282,3 +282,7 @@ FDs: TDB
 
 ## Schema Diagram
 You can find the Schema Image [Here](schema_relationship_diagram.png) and the Source Code [Here](databaseschemasource.md)
+
+## Meeting Logs
+**Reference File:** [032425](../documentation/meeting_logs/032425.md)<br/>
+**Reference File:** [032485](../documentation/meeting_logs/032825.md)<br/>
