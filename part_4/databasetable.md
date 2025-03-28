@@ -126,6 +126,7 @@
 |-|-|-|
 | Publisher_ID | INT | The id of the publisher that published a book. This is a foreign key into the Publisher table |
 | Book_ID | INT | The id of the book that the publisher published. This is a foreign key into the Book table |
+| Publish_Date | DATE | The date the book was published |
 
 ## Is_Part_Of
 | Attribute Name        | Data Type | Description |
@@ -158,7 +159,6 @@
 |-|-|-|
 | Name | TEXT | The name of the publishing organization |
 | ID | INT | The unique id of the publisher |
-| Publish_Date | DATE | The date the book was published |
 
 ## Book_Series
 | Attribute Name        | Data Type | Description |
