@@ -49,8 +49,6 @@ This project consists of the development of a database system to manage library 
 	- Used to specify the data type and permissible values for an attribute.
 - Domain Constraint
 	- A rule that restricts the type of data that can be stored in a particular attribute of a relation.
-- Functional Dependency
-	- A constraint between two sets of attributes in a relation from a database. 
 
 
 NOTE: Other definitions for entities and relationships are defined at the intial mention.
