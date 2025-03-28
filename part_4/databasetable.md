@@ -1,8 +1,8 @@
 ## Room
-| Attribute Name        | Data Type | Description |
-|-|-|-|
-| Capacity | INT | The number of people the room has space for |
-| Number | INT | The unique number of the room in the library |
+| Attribute Name        | Data Type | Foreign key of | primary key | Description |
+|-|-|-|-|-|
+| Capacity | INT | | | The number of people the room has space for |
+| Number | INT | | x | The unique number of the room in the library |
 
 ## Reserves_Room
 | Attribute Name        | Data Type | Description |
