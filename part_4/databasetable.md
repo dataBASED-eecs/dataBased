@@ -145,6 +145,7 @@
 |-|-|-|
 | Studio_ID | INT | The id of the studio that released the movie. This is a foreign key into the Studio table |
 | Movie_ID | INT | The id of the movie that studio released. This is a foreign key into the Movie table |
+| Release_Date | DATE | The date the movie was released |
 
 ## Book
 | Attribute Name        | Data Type | Description |
@@ -157,6 +158,7 @@
 |-|-|-|
 | Name | TEXT | The name of the publishing organization |
 | ID | INT | The unique id of the publisher |
+| Publish_Date | DATE | The date the book was published |
 
 ## Book_Series
 | Attribute Name        | Data Type | Description |
@@ -186,7 +188,6 @@
 | Attribute Name        | Data Type | Description |
 |-|-|-|
 | ISAN | TEXT | The unique ISAN id of the movie |
-| Release_Date | DATE | The date the movie was released |
 | Title | TEXT | The title of the movie |
 
 ## Studio
