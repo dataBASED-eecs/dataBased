@@ -1,4 +1,4 @@
-Here is the source code for the database schema
+Here is the source code for the database schema. it can be compiled through [Here](https://dreampuf.github.io/GraphvizOnline/?engine=dot#)
 
 ```
 digraph G {
