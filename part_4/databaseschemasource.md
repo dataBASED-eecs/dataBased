@@ -290,7 +290,7 @@ digraph G {
                 <TD COLSPAN="1" ALIGN="LEFT" BORDER="0"><B>Reserves_Room</B></TD>
             </TR>
             <TR>
-                <TD PORT="member_id" BGCOLOR="#ffcccc">Member_ID</TD>
+                <TD PORT="member_id" BGCOLOR="#ffcccc"><U>Member_ID</U></TD>
                 <TD PORT="room_id" BGCOLOR="#ffcccc"><U>Room_ID</U></TD>
                 <TD PORT="date" BGCOLOR="#ffcccc">Date</TD>
                 <TD PORT="duration" BGCOLOR="#ffcccc">Duration</TD>
@@ -342,8 +342,8 @@ digraph G {
                 <TD COLSPAN="1" ALIGN="LEFT" BORDER="0"><B>Directs</B></TD>
             </TR>
             <TR>
-                <TD PORT="author_id" BGCOLOR="#ffcccc"><U>Director_ID</U></TD>
-                <TD PORT="book_id" BGCOLOR="#ffcccc"><U>Movie_ID</U></TD>
+                <TD PORT="director_id" BGCOLOR="#ffcccc"><U>Director_ID</U></TD>
+                <TD PORT="movie_id" BGCOLOR="#ffcccc"><U>Movie_ID</U></TD>
             </TR>
         </TABLE>>];
         
@@ -367,8 +367,8 @@ digraph G {
                 <TD COLSPAN="1" ALIGN="LEFT" BORDER="0"><B>Book_Has</B></TD>
             </TR>
             <TR>
-                <TD PORT="book_id" BGCOLOR="#ffcccc"><U>Book_ID</U></TD>
-                <TD PORT="book_copy_id" BGCOLOR="#ffcccc">Copy_ID</TD>
+                <TD PORT="book_id" BGCOLOR="#ffcccc">Book_ID</TD>
+                <TD PORT="book_copy_id" BGCOLOR="#ffcccc"><U>Copy_ID</U></TD>
             </TR>
         </TABLE>>];
         
@@ -379,8 +379,8 @@ digraph G {
                 <TD COLSPAN="1" ALIGN="LEFT" BORDER="0"><B>Movie_Has</B></TD>
             </TR>
             <TR>
-                <TD PORT="movie_id" BGCOLOR="#ffcccc"><U>Movie_ID</U></TD>
-                <TD PORT="movie_copy_id" BGCOLOR="#ffcccc">Copy_ID</TD>
+                <TD PORT="movie_id" BGCOLOR="#ffcccc">Movie_ID</TD>
+                <TD PORT="movie_copy_id" BGCOLOR="#ffcccc"><U>Copy_ID</U></TD>
             </TR>
         </TABLE>>];
     
@@ -393,7 +393,7 @@ digraph G {
     
     // A book copy and movie copies inherit from material
     book_copy:material_id -> material:material_id
-    movie_copy:material_id -> material:material_id
+    movie_copy:movie_id -> material:material_id
     
     // Link the foreign keys in staff_organizes_community_event
     member_registers_community_event:member_id -> member:member_member_id
@@ -453,7 +453,7 @@ digraph G {
     
     // Link the foreign keys in movie_has_movie_copy
     movie_has_movie_copy:movie_id -> movie:movie_isan
-    movie_has_movie_copy:movie_copy_id -> movie_copy:material_id
+    movie_has_movie_copy:movie_copy_id -> movie_copy:movie_id
 
 }
 ```
