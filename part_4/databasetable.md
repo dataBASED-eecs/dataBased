@@ -9,8 +9,8 @@
 |-|-|-|-|-|
 | Duration | TIME | | | The duration the room is reserved for |
 | Date | DATETIME | | | The time the room reservation starts at |
-| Room_ID | Number | x | Room (Number) | The number of the room that is reserved. This is a foreign key into the Room table |
-| Member_ID | INT | x | Member (Member_ID) | The member id that reserved the room. This is a foreign key into the Member table |
+| Room_ID | Number | Room (Number) | x | The number of the room that is reserved. This is a foreign key into the Room table |
+| Member_ID | INT | Member (Member_ID) | x | The member id that reserved the room. This is a foreign key into the Member table |
 
 ## Staff
 | Attribute Name        | Data Type | Foreign key of | primary key | Description |
@@ -29,14 +29,14 @@
 ## Organizes
 | Attribute Name        | Data Type | Foreign key of | primary key | Description |
 |-|-|-|-|-|
-| Staff_ID | INT | x | Staff (Member_ID) | The ID of the staff member that organizes the event. This is a foreign key into the Staff table |
-| Community_Event_ID | INT | x | Community_Event (ID) | The id of the community event that is organized. This is a foreign key into the Community Event table |
+| Staff_ID | INT | Staff (Member_ID) | x | The ID of the staff member that organizes the event. This is a foreign key into the Staff table |
+| Community_Event_ID | INT | Community_Event (ID) | x | The id of the community event that is organized. This is a foreign key into the Community Event table |
 
 ## Registers
 | Attribute Name        | Data Type | Foreign key of | primary key | Description |
 |-|-|-|-|-|
-| Member_ID | INT | x | Member (Member_ID) The member id of a member that is registered for an event. This is a foreign key into the Staff table |
-| Community_Event_ID | INT | x | Community_Event (ID) | The id of the community event that is organized. This is a foreign key into the Community Event table |
+| Member_ID | INT | Member (Member_ID) | x | The member id of a member that is registered for an event. This is a foreign key into the Staff table |
+| Community_Event_ID | INT | Community_Event (ID) | x | The id of the community event that is organized. This is a foreign key into the Community Event table |
 
 ## Community_Event
 | Attribute Name        | Data Type | Foreign key of | primary key | Description |
@@ -47,7 +47,7 @@
 | End_Time | DATETIME | | | The time the event ends |
 | Organizer_First_Name | | | TEXT | The first name of the event organizer |
 | Organizer_Last_Name | | | TEXT | The last name of the event organizer |
-| ID | INT | x | | The unique id of the event |
+| ID | INT | | x | The unique id of the event |
 
 ## Member
 | Attribute Name        | Data Type | Foreign key of | primary key | Description |
