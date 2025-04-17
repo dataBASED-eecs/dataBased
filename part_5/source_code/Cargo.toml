@@ -1,0 +1,10 @@
+[package]
+name = "source_code"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+sqlx = { version = "0.7", features = ["mysql", "runtime-tokio", "macros"] }
+tokio = { version = "1", features = ["full"] }
+fake = { version = "2", features = ["derive"] }
+dotenvy = "0.15"  # For environment variables
