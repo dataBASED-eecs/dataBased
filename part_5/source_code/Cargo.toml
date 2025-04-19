@@ -4,7 +4,9 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-sqlx = { version = "0.7", features = ["mysql", "runtime-tokio", "macros"] }
+sqlx = { version = "0.7", features = ["mysql", "runtime-tokio", "macros", "chrono", "bigdecimal"] }
 tokio = { version = "1", features = ["full"] }
-fake = { version = "2", features = ["derive"] }
+fake = { version = "2", features = ["derive", "chrono"] }
+chrono = "0.4"
 dotenvy = "0.15"  # For environment variables
+rand = "0.8"
