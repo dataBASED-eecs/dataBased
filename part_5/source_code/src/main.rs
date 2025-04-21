@@ -1,11 +1,12 @@
-use chrono::NaiveDate;
+use chrono::{Duration, NaiveDate, NaiveDateTime};
 use dotenvy::dotenv;
 use fake::faker::phone_number::raw::PhoneNumber;
 use fake::locales::EN;
 use fake::{
     faker::barcode::raw::Isbn10, faker::barcode::raw::Isbn13, faker::chrono::raw::Date,
-    faker::company::en::CompanyName, faker::internet::raw::FreeEmail, faker::lorem::en::Sentence,
-    faker::name::en::FirstName, faker::name::en::LastName, faker::number::en::Digit, Fake,
+    faker::chrono::raw::DateTime, faker::company::en::CompanyName, faker::internet::raw::FreeEmail,
+    faker::lorem::en::Sentence, faker::name::en::FirstName, faker::name::en::LastName,
+    faker::number::en::Digit, Fake,
 };
 use rand::Rng;
 use sqlx::{mysql::MySqlPoolOptions, types::BigDecimal, MySql, Pool, Row};
@@ -204,10 +205,9 @@ async fn create_tables(pool: &Pool<MySql>) -> Result<(), sqlx::Error> {
                 End_Time DATETIME NOT NULL,
                 Longitude FLOAT NOT NULL,
                 Latitude FLOAT NOT NULL,
-                Capacity INT NOT NULL,
-                PRIMARY KEY (Number)
+                PRIMARY KEY (ID)
                 );
-             "# ,
+             "#,
     )
     .execute(pool)
     .await?;
@@ -447,6 +447,27 @@ async fn populate_tables(pool: &Pool<MySql>) -> Result<(), sqlx::Error> {
         .execute(pool)
         .await?;
     }
+    for _ in 1..10 {
+        let fake_start_time : NaiveDateTime = DateTime(EN).fake();
+        let random_minutes : i64 = rng.gen_range(1..1000);
+        let fake_end_time : NaiveDateTime = fake_start_time + Duration::minutes(random_minutes);
+        let fake_latitude : f32 = rng.gen_range(-90.0..90.0);
+        let fake_longitude : f32 = rng.gen_range(-180.0..180.0);
+
+        sqlx::query(
+            r#"
+                INSERT INTO community_event (Start_Time, End_Time, Longitude, Latitude)
+                VALUES
+                (?, ?, ?, ?)
+                "#,
+        )
+        .bind(fake_start_time)
+        .bind(fake_end_time)
+        .bind(fake_longitude)
+        .bind(fake_latitude)
+        .execute(pool)
+        .await?;
+    }
 
     Ok(())
 }
@@ -494,7 +515,7 @@ async fn main() -> Result<(), sqlx::Error> {
         "movie_copy",
         "material",
         "room",
-        "community_event"
+        "community_event",
     ] {
         let query = format!("DROP TABLE IF EXISTS {};", row);
 
