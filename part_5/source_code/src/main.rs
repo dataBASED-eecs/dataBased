@@ -8,6 +8,7 @@ use fake::{
     faker::lorem::en::Sentence, faker::name::en::FirstName, faker::name::en::LastName,
     faker::number::en::Digit, Fake,
 };
+use rand::seq::SliceRandom;
 use rand::Rng;
 use sqlx::{mysql::MySqlPoolOptions, types::BigDecimal, MySql, Pool, Row};
 use std::env;
@@ -212,6 +213,224 @@ async fn create_tables(pool: &Pool<MySql>) -> Result<(), sqlx::Error> {
     .execute(pool)
     .await?;
 
+    sqlx::query(
+        r#"
+            CREATE TABLE IF NOT EXISTS reserves_room (
+                Room_ID INT NOT NULL,
+                Member_ID INT NOT NULL,
+                Duration TIME NOT NULL,
+                Date DATETIME NOT NULL,
+                PRIMARY KEY (Room_ID, Member_ID),
+                FOREIGN KEY (Room_ID) REFERENCES room(Number) ON DELETE CASCADE,
+                FOREIGN KEY (Member_ID) REFERENCES member(Member_ID) ON DELETE CASCADE
+            );
+        "#,
+    )
+    .execute(pool)
+    .await?;
+
+    sqlx::query(
+        r#"
+            CREATE TABLE IF NOT EXISTS organizes (
+                Staff_ID INT NOT NULL,
+                Community_Event_ID INT NOT NULL,
+                PRIMARY KEY (Staff_ID, Community_Event_ID),
+                FOREIGN KEY (Staff_ID) REFERENCES staff(Member_ID) ON DELETE CASCADE,
+                FOREIGN KEY (Community_Event_ID) REFERENCES community_event(ID) ON DELETE CASCADE
+            );
+        "#,
+    )
+    .execute(pool)
+    .await?;
+
+    sqlx::query(
+        r#"
+            CREATE TABLE IF NOT EXISTS registers (
+                Member_ID INT NOT NULL,
+                Community_Event_ID INT NOT NULL,
+                PRIMARY KEY (Member_ID, Community_Event_ID),
+                FOREIGN KEY (Member_ID) REFERENCES member(Member_ID) ON DELETE CASCADE,
+                FOREIGN KEY (Community_Event_ID) REFERENCES community_event(ID) ON DELETE CASCADE
+            );
+        "#,
+    )
+    .execute(pool)
+    .await?;
+
+    sqlx::query(
+        r#"
+            CREATE TABLE IF NOT EXISTS loans (
+                Member_ID INT NOT NULL,
+                Material_ID INT NOT NULL,
+                Duration TIME NOT NULL,
+                Start_Date DATETIME NOT NULL,
+                PRIMARY KEY (Member_ID, Material_ID),
+                FOREIGN KEY (Member_ID) REFERENCES member(Member_ID) ON DELETE CASCADE,
+                FOREIGN KEY (Material_ID) REFERENCES material(ID) ON DELETE CASCADE
+            );
+        "#,
+    )
+    .execute(pool)
+    .await?;
+
+    sqlx::query(
+        r#"
+        CREATE TABLE IF NOT EXISTS donates (
+            Member_ID INT NOT NULL,
+            Material_ID INT NOT NULL,
+            PRIMARY KEY (Member_ID, Material_ID),
+            FOREIGN KEY (Member_ID) REFERENCES member(Member_ID) ON DELETE CASCADE,
+            FOREIGN KEY (Material_ID) REFERENCES material(ID) ON DELETE CASCADE
+        );
+    "#,
+    )
+    .execute(pool)
+    .await?;
+
+    sqlx::query(
+        r#"
+            CREATE TABLE IF NOT EXISTS reserves_material (
+                Member_ID INT NOT NULL,
+                Material_ID INT NOT NULL,
+                Reservation_Date DATETIME NOT NULL,
+                PRIMARY KEY (Member_ID, Material_ID),
+                FOREIGN KEY (Member_ID) REFERENCES member(Member_ID) ON DELETE CASCADE,
+                FOREIGN KEY (Material_ID) REFERENCES material(ID) ON DELETE CASCADE
+            );
+        "#,
+    )
+    .execute(pool)
+    .await?;
+
+    sqlx::query(
+        r#"
+        CREATE TABLE IF NOT EXISTS searches_book (
+            Member_ID INT NOT NULL,
+            Book_ID VARCHAR(20) NOT NULL,
+            PRIMARY KEY (Member_ID, Book_ID),
+            FOREIGN KEY (Member_ID) REFERENCES member(Member_ID) ON DELETE CASCADE,
+            FOREIGN KEY (Book_ID) REFERENCES book(ISBN) ON DELETE CASCADE
+        );
+    "#,
+    )
+    .execute(pool)
+    .await?;
+
+    sqlx::query(
+        r#"
+            CREATE TABLE IF NOT EXISTS searches_movie (
+                Member_ID INT NOT NULL,
+                Movie_ID VARCHAR(24) NOT NULL,
+                PRIMARY KEY (Member_ID, Movie_ID),
+                FOREIGN KEY (Member_ID) REFERENCES member(Member_ID) ON DELETE CASCADE,
+                FOREIGN KEY (Movie_ID) REFERENCES movie(ISAN) ON DELETE CASCADE
+            );
+        "#,
+    )
+    .execute(pool)
+    .await?;
+
+    sqlx::query(
+        r#"
+        CREATE TABLE IF NOT EXISTS book_has (
+            Copy_ID INT NOT NULL,
+            Book_ID VARCHAR(20) NOT NULL,
+            PRIMARY KEY (Copy_ID),
+            FOREIGN KEY (Copy_ID) REFERENCES book_copy(ID) ON DELETE CASCADE,
+            FOREIGN KEY (Book_ID) REFERENCES book(ISBN) ON DELETE CASCADE
+        );
+    "#,
+    )
+    .execute(pool)
+    .await?;
+
+    sqlx::query(
+        r#"
+            CREATE TABLE IF NOT EXISTS writes (
+                Author_ID INT NOT NULL,
+                Book_ID VARCHAR(20) NOT NULL,
+                PRIMARY KEY (Author_ID, Book_ID),
+                FOREIGN KEY (Author_ID) REFERENCES author(ID) ON DELETE CASCADE,
+                FOREIGN KEY (Book_ID) REFERENCES book(ISBN) ON DELETE CASCADE
+            );
+        "#,
+    )
+    .execute(pool)
+    .await?;
+
+    sqlx::query(
+        r#"
+        CREATE TABLE IF NOT EXISTS publishes (
+            Publisher_ID INT NOT NULL,
+            Book_ID VARCHAR(20) NOT NULL,
+            Publish_Date DATE NOT NULL,
+            PRIMARY KEY (Publisher_ID, Book_ID),
+            FOREIGN KEY (Publisher_ID) REFERENCES publisher(ID) ON DELETE CASCADE,
+            FOREIGN KEY (Book_ID) REFERENCES book(ISBN) ON DELETE CASCADE
+        );
+    "#,
+    )
+    .execute(pool)
+    .await?;
+
+    sqlx::query(
+        r#"
+            CREATE TABLE IF NOT EXISTS is_part_of (
+                Book_ID VARCHAR(20) NOT NULL,
+                Book_Series_ID INT NOT NULL,
+                Seq_Order INT NOT NULL,
+                PRIMARY KEY (Book_ID),
+                FOREIGN KEY (Book_ID) REFERENCES book(ISBN) ON DELETE CASCADE,
+                FOREIGN KEY (Book_Series_ID) REFERENCES book_series(ID) ON DELETE CASCADE
+            );
+        "#,
+    )
+    .execute(pool)
+    .await?;
+
+    sqlx::query(
+        r#"
+            CREATE TABLE IF NOT EXISTS directs (
+                Director_ID INT NOT NULL,
+                Movie_ID VARCHAR(24) NOT NULL,
+                PRIMARY KEY (Director_ID, Movie_ID),
+                FOREIGN KEY (Director_ID) REFERENCES director(ID) ON DELETE CASCADE,
+                FOREIGN KEY (Movie_ID) REFERENCES movie(ISAN) ON DELETE CASCADE
+            );
+        "#,
+    )
+    .execute(pool)
+    .await?;
+
+    sqlx::query(
+        r#"
+            CREATE TABLE IF NOT EXISTS releases (
+                Studio_ID INT NOT NULL,
+                Movie_ID VARCHAR(24) NOT NULL,
+                Release_Date DATE NOT NULL,
+                PRIMARY KEY (Studio_ID, Movie_ID),
+                FOREIGN KEY (Studio_ID) REFERENCES studio(ID) ON DELETE CASCADE,
+                FOREIGN KEY (Movie_ID) REFERENCES movie(ISAN) ON DELETE CASCADE
+            );
+        "#,
+    )
+    .execute(pool)
+    .await?;
+
+    sqlx::query(
+        r#"
+            CREATE TABLE IF NOT EXISTS movie_has (
+                Copy_ID INT NOT NULL,
+                Movie_ID VARCHAR(24) NOT NULL,
+                PRIMARY KEY (Copy_ID),
+                FOREIGN KEY (Copy_ID) REFERENCES movie_copy(ID) ON DELETE CASCADE,
+                FOREIGN KEY (Movie_ID) REFERENCES movie(ISAN) ON DELETE CASCADE
+            );
+        "#,
+    )
+    .execute(pool)
+    .await?;
+
     Ok(())
 }
 
@@ -381,7 +600,7 @@ async fn populate_tables(pool: &Pool<MySql>) -> Result<(), sqlx::Error> {
         .await?;
     }
 
-    for _ in 1..100 {
+    for i in 1..100 {
         let book_title: String = Sentence(1..20).fake();
 
         let bytes: [u8; 12] = rand::random();
@@ -447,12 +666,13 @@ async fn populate_tables(pool: &Pool<MySql>) -> Result<(), sqlx::Error> {
         .execute(pool)
         .await?;
     }
+
     for _ in 1..10 {
-        let fake_start_time : NaiveDateTime = DateTime(EN).fake();
-        let random_minutes : i64 = rng.gen_range(1..1000);
-        let fake_end_time : NaiveDateTime = fake_start_time + Duration::minutes(random_minutes);
-        let fake_latitude : f32 = rng.gen_range(-90.0..90.0);
-        let fake_longitude : f32 = rng.gen_range(-180.0..180.0);
+        let fake_start_time: NaiveDateTime = DateTime(EN).fake();
+        let random_minutes: i64 = rng.gen_range(1..1000);
+        let fake_end_time: NaiveDateTime = fake_start_time + Duration::minutes(random_minutes);
+        let fake_latitude: f32 = rng.gen_range(-90.0..90.0);
+        let fake_longitude: f32 = rng.gen_range(-180.0..180.0);
 
         sqlx::query(
             r#"
@@ -467,6 +687,109 @@ async fn populate_tables(pool: &Pool<MySql>) -> Result<(), sqlx::Error> {
         .bind(fake_latitude)
         .execute(pool)
         .await?;
+    }
+
+    let staff_tup: Vec<(i32,)> = sqlx::query_as("SELECT member_id FROM staff")
+        .fetch_all(pool)
+        .await?;
+
+    let staff: Vec<i32> = staff_tup.iter().map(|(x,)| *x).collect();
+
+    for i in 1..10 {
+        let mut shuffled_staff = staff.clone();
+        shuffled_staff.shuffle(&mut rng);
+
+        let unique_random_staff: Vec<i32> = shuffled_staff
+            .into_iter()
+            .take(rng.gen_range(1..staff.len()))
+            .collect();
+
+        for s in unique_random_staff {
+            sqlx::query(
+                r#"
+                    INSERT INTO organizes (Staff_ID, Community_Event_ID)
+                    VALUES
+                    (?, ?)
+                    "#,
+            )
+            .bind(s)
+            .bind(i)
+            .execute(pool)
+            .await?;
+        }
+    }
+
+    for i in 1..1000 {
+        let rand_member: i32 = rng.gen_range(1..100);
+        sqlx::query(
+            r#"
+                INSERT INTO donates (Member_ID, Material_ID)
+                VALUES
+                (?, ?)
+                "#,
+        )
+        .bind(rand_member)
+        .bind(i)
+        .execute(pool)
+        .await?;
+    }
+
+    let book_ids_tup: Vec<(String,)> = sqlx::query_as("SELECT ISBN FROM book")
+        .fetch_all(pool)
+        .await?;
+
+    let book_ids: Vec<String> = book_ids_tup.iter().map(|(x,)| x.clone()).collect();
+
+    let movie_ids_tup: Vec<(String,)> = sqlx::query_as("SELECT ISAN FROM movie")
+        .fetch_all(pool)
+        .await?;
+
+    let movie_ids: Vec<String> = movie_ids_tup.iter().map(|(x,)| x.clone()).collect();
+
+    let member_tup: Vec<(i32,)> = sqlx::query_as("SELECT member_id FROM member")
+        .fetch_all(pool)
+        .await?;
+
+    let members: Vec<i32> = member_tup.iter().map(|(x,)| *x).collect();
+
+    for bid in book_ids {
+        let rand_range = rng.gen_range(0..members.len());
+        let selected_members: Vec<&i32> = members.choose_multiple(&mut rng, rand_range).collect();
+        for member in selected_members {
+            if rand::random() {
+                sqlx::query(
+                    r#"
+                        INSERT INTO searches_book (Member_ID, Book_ID)
+                        VALUES
+                        (?, ?)
+                        "#,
+                )
+                .bind(member)
+                .bind(bid.to_string())
+                .execute(pool)
+                .await?;
+            }
+        }
+    }
+
+    for mid in movie_ids {
+        let rand_range = rng.gen_range(0..members.len());
+        let selected_members: Vec<&i32> = members.choose_multiple(&mut rng, rand_range).collect();
+        for member in selected_members {
+            if rand::random() {
+                sqlx::query(
+                    r#"
+                        INSERT INTO searches_movie (Member_ID, Movie_ID)
+                        VALUES
+                        (?, ?)
+                        "#,
+                )
+                .bind(member)
+                .bind(mid.to_string())
+                .execute(pool)
+                .await?;
+            }
+        }
     }
 
     Ok(())
@@ -503,19 +826,35 @@ async fn main() -> Result<(), sqlx::Error> {
         .await?;
 
     for row in [
-        "staff",
-        "member",
-        "book",
-        "book_series",
-        "publisher",
-        "author",
-        "director",
-        "studio",
-        "book_copy",
-        "movie_copy",
-        "material",
-        "room",
-        "community_event",
+        "reserves_room",
+        "organizes", //
+        "registers",
+        "loans",
+        "donates", //
+        "reserves_material",
+        "searches_book",  //
+        "searches_movie", //
+        "book_has",
+        "writes",
+        "publishes",
+        "is_part_of",
+        "directs",
+        "releases",
+        "movie_has",
+        "staff",           //
+        "member",          // Need to validate dates
+        "book",            //
+        "book_series",     //
+        "movie",           //
+        "publisher",       //
+        "author",          //
+        "director",        //
+        "studio",          //
+        "book_copy",       //
+        "movie_copy",      //
+        "material",        //
+        "room",            //
+        "community_event", // Need to validate dates
     ] {
         let query = format!("DROP TABLE IF EXISTS {};", row);
 
