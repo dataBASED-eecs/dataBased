@@ -752,7 +752,7 @@ async fn populate_tables(pool: &Pool<MySql>) -> Result<(), sqlx::Error> {
 
     let members: Vec<i32> = member_tup.iter().map(|(x,)| *x).collect();
 
-    for bid in book_ids {
+    for bid in &book_ids {
         let rand_range = rng.gen_range(0..members.len());
         let selected_members: Vec<&i32> = members.choose_multiple(&mut rng, rand_range).collect();
         for member in selected_members {
@@ -772,7 +772,7 @@ async fn populate_tables(pool: &Pool<MySql>) -> Result<(), sqlx::Error> {
         }
     }
 
-    for mid in movie_ids {
+    for mid in &movie_ids {
         let rand_range = rng.gen_range(0..members.len());
         let selected_members: Vec<&i32> = members.choose_multiple(&mut rng, rand_range).collect();
         for member in selected_members {
@@ -790,6 +790,93 @@ async fn populate_tables(pool: &Pool<MySql>) -> Result<(), sqlx::Error> {
                 .await?;
             }
         }
+    }
+
+    let author_tup: Vec<(i32,)> = sqlx::query_as("SELECT id FROM author")
+        .fetch_all(pool)
+        .await?;
+
+    let authors: Vec<i32> = author_tup.iter().map(|(x,)| *x).collect();
+    for bid in &book_ids {
+        let rand_range = rng.gen_range(1..members.len());
+        let selected_authors: Vec<&i32> = authors.choose_multiple(&mut rng, rand_range).collect();
+        for author in selected_authors {
+            sqlx::query(
+                r#"
+                        INSERT INTO writes (Author_ID, Book_ID)
+                        VALUES
+                        (?, ?)
+                        "#,
+            )
+            .bind(author)
+            .bind(bid.to_string())
+            .execute(pool)
+            .await?;
+        }
+    }
+
+    let director_tup: Vec<(i32,)> = sqlx::query_as("SELECT id FROM director")
+        .fetch_all(pool)
+        .await?;
+
+    let directors: Vec<i32> = director_tup.iter().map(|(x,)| *x).collect();
+
+    for mid in &movie_ids {
+        let rand_range = rng.gen_range(1..members.len());
+        let selected_directors: Vec<&i32> =
+            directors.choose_multiple(&mut rng, rand_range).collect();
+        for director in selected_directors {
+            sqlx::query(
+                r#"
+                        INSERT INTO directs (Director_ID, Movie_ID)
+                        VALUES
+                        (?, ?)
+                        "#,
+            )
+            .bind(director)
+            .bind(mid.to_string())
+            .execute(pool)
+            .await?;
+        }
+    }
+
+    let book_copy_tup: Vec<(i32,)> = sqlx::query_as("SELECT id FROM book_copy")
+        .fetch_all(pool)
+        .await?;
+
+    let book_copies: Vec<i32> = book_copy_tup.iter().map(|(x,)| *x).collect();
+
+    for copy in book_copies {
+        sqlx::query(
+            r#"
+                INSERT INTO book_has (Copy_ID, Book_ID)
+                VALUES
+                (?, ?)
+                "#,
+        )
+        .bind(copy)
+        .bind(book_ids.choose(&mut rng).unwrap())
+        .execute(pool)
+        .await?;
+    }
+
+    let movie_copy_tup: Vec<(i32,)> = sqlx::query_as("SELECT id FROM movie_copy")
+        .fetch_all(pool)
+        .await?;
+
+    let movie_copies: Vec<i32> = movie_copy_tup.iter().map(|(x,)| *x).collect();
+    for copy in movie_copies {
+        sqlx::query(
+            r#"
+                INSERT INTO movie_has (Copy_ID, Movie_ID)
+                VALUES
+                (?, ?)
+                "#,
+        )
+        .bind(copy)
+        .bind(movie_ids.choose(&mut rng).unwrap())
+        .execute(pool)
+        .await?;
     }
 
     Ok(())
@@ -834,13 +921,13 @@ async fn main() -> Result<(), sqlx::Error> {
         "reserves_material",
         "searches_book",  //
         "searches_movie", //
-        "book_has",
-        "writes",
+        "book_has",       //
+        "writes",         //
         "publishes",
         "is_part_of",
-        "directs",
+        "directs", //
         "releases",
-        "movie_has",
+        "movie_has",       //
         "staff",           //
         "member",          // Need to validate dates
         "book",            //
