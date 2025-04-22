@@ -1,16 +1,17 @@
-use chrono::{Duration, NaiveDate, NaiveDateTime};
+use chrono::{Duration, NaiveDate, NaiveDateTime, NaiveTime};
 use dotenvy::dotenv;
 use fake::faker::phone_number::raw::PhoneNumber;
 use fake::locales::EN;
 use fake::{
     faker::barcode::raw::Isbn10, faker::barcode::raw::Isbn13, faker::chrono::raw::Date,
     faker::chrono::raw::DateTime, faker::company::en::CompanyName, faker::internet::raw::FreeEmail,
-    faker::lorem::en::Sentence, faker::name::en::FirstName, faker::name::en::LastName,
-    faker::number::en::Digit, Fake,
+    faker::lorem::en::Sentence, faker::name::en::FirstName, faker::name::en::LastName, faker::chrono::raw::Time,
+    faker::number::en::Digit, Fake, Dummy
 };
 use rand::seq::SliceRandom;
 use rand::Rng;
 use sqlx::{mysql::MySqlPoolOptions, types::BigDecimal, MySql, Pool, Row};
+use std::collections::HashMap;
 use std::env;
 use std::{
     f32::MIN_EXP,
@@ -465,7 +466,7 @@ async fn populate_tables(pool: &Pool<MySql>) -> Result<(), sqlx::Error> {
         .fetch_all(pool)
         .await?;
 
-    for member in members {
+    for member in &members {
         let one_in_four = rng.gen_range(0..4) == 0;
 
         if one_in_four {
@@ -695,13 +696,23 @@ async fn populate_tables(pool: &Pool<MySql>) -> Result<(), sqlx::Error> {
 
     let staff: Vec<i32> = staff_tup.iter().map(|(x,)| *x).collect();
 
+    let member_conv: Vec<i32> = members.iter().map(|(x,)| *x).collect();
+
     for i in 1..10 {
         let mut shuffled_staff = staff.clone();
         shuffled_staff.shuffle(&mut rng);
 
+        let mut shuffled_members = staff.clone();
+        shuffled_members.shuffle(&mut rng);
+
         let unique_random_staff: Vec<i32> = shuffled_staff
             .into_iter()
             .take(rng.gen_range(1..staff.len()))
+            .collect();
+
+        let unique_random_members: Vec<i32> = shuffled_members
+            .into_iter()
+            .take(rng.gen_range(0..member_conv.len()))
             .collect();
 
         for s in unique_random_staff {
@@ -713,6 +724,20 @@ async fn populate_tables(pool: &Pool<MySql>) -> Result<(), sqlx::Error> {
                     "#,
             )
             .bind(s)
+            .bind(i)
+            .execute(pool)
+            .await?;
+        }
+
+        for m in unique_random_members {
+            sqlx::query(
+                r#"
+                    INSERT INTO registers (Member_ID, Community_Event_ID)
+                    VALUES
+                    (?, ?)
+                    "#,
+            )
+            .bind(m)
             .bind(i)
             .execute(pool)
             .await?;
@@ -846,7 +871,7 @@ async fn populate_tables(pool: &Pool<MySql>) -> Result<(), sqlx::Error> {
 
     let book_copies: Vec<i32> = book_copy_tup.iter().map(|(x,)| *x).collect();
 
-    for copy in book_copies {
+    for copy in &book_copies {
         sqlx::query(
             r#"
                 INSERT INTO book_has (Copy_ID, Book_ID)
@@ -877,6 +902,134 @@ async fn populate_tables(pool: &Pool<MySql>) -> Result<(), sqlx::Error> {
         .bind(movie_ids.choose(&mut rng).unwrap())
         .execute(pool)
         .await?;
+    }
+    let mut hash_table: HashMap<i32, i32> = HashMap::new();
+
+    // Todo, remove all series that don't have a book or have just one book
+    for book_id in &book_ids {
+        if rand::random() {
+            let rand_series: i32 = rng.gen_range(1..20);
+
+            // Insert if not present
+            hash_table.entry(rand_series).or_insert(1);
+
+            // Get a mutable reference to the value
+            if let Some(temp) = hash_table.get_mut(&rand_series) {
+                sqlx::query(
+                    r#"
+                        INSERT INTO is_part_of (Book_ID, Book_Series_ID, Seq_Order)
+                        VALUES
+                        (?, ?, ?)
+                    "#,
+                )
+                .bind(book_id)
+                .bind(rand_series)
+                .bind(*temp)
+                .execute(pool)
+                .await?;
+
+                // Increment the value in the HashMap
+                *temp += 1;
+            }
+        }
+    }
+
+    for book in &book_ids {
+        let rand_publisher = rng.gen_range(1..25);
+        let rand_date: NaiveDate = Date(EN).fake();
+        sqlx::query(
+            r#"
+                INSERT INTO publishes (Publisher_ID, Book_ID, Publish_Date)
+                VALUES
+                (?, ?, ?)
+            "#,
+        )
+        .bind(rand_publisher)
+        .bind(book)
+        .bind(rand_date)
+        .execute(pool)
+        .await?;
+    }
+
+    for movie in &movie_ids {
+        let rand_studio = rng.gen_range(1..25);
+        let rand_date: NaiveDate = Date(EN).fake();
+        sqlx::query(
+            r#"
+                INSERT INTO releases (Studio_ID, Movie_ID, Release_Date)
+                VALUES
+                (?, ?, ?)
+            "#,
+        )
+        .bind(rand_studio)
+        .bind(movie)
+        .bind(rand_date)
+        .execute(pool)
+        .await?;
+    }
+
+    for room in 1..10 {
+        for member in &member_conv {
+            if rand::random() {
+                let fake_start_time: NaiveDateTime = DateTime(EN).fake();
+                let random_time : NaiveTime = Time(EN).fake();
+                sqlx::query(
+                    r#"
+                        INSERT INTO reserves_room (Room_ID, Member_ID, Duration, Date)
+                        VALUES
+                        (?, ?, ?, ?)
+                    "#,
+                )
+                .bind(room)
+                .bind(member)
+                .bind(random_time)
+                .bind(fake_start_time)
+                .execute(pool)
+                .await?;
+            }
+        }
+    }
+
+    for material in 1..999 {
+        for member in &member_conv {
+            if rand::random() {
+                let fake_start_time: NaiveDateTime = DateTime(EN).fake();
+                let random_time : NaiveTime = Time(EN).fake();
+                sqlx::query(
+                    r#"
+                        INSERT INTO loans (Member_ID, Material_ID, Duration, Start_Date)
+                        VALUES
+                        (?, ?, ?, ?)
+                    "#,
+                )
+                .bind(member)
+                .bind(material)
+                .bind(random_time)
+                .bind(fake_start_time)
+                .execute(pool)
+                .await?;
+            }
+        }
+    }
+
+    for material in 1..999 {
+        for member in &member_conv {
+            if rand::random() {
+                let fake_start_time: NaiveDateTime = DateTime(EN).fake();
+                sqlx::query(
+                    r#"
+                        INSERT INTO reserves_material (Member_ID, Material_ID, Reservation_Date)
+                        VALUES
+                        (?, ?, ?)
+                    "#,
+                )
+                .bind(member)
+                .bind(material)
+                .bind(fake_start_time)
+                .execute(pool)
+                .await?;
+            }
+        }
     }
 
     Ok(())
@@ -913,20 +1066,20 @@ async fn main() -> Result<(), sqlx::Error> {
         .await?;
 
     for row in [
-        "reserves_room",
-        "organizes", //
-        "registers",
-        "loans",
-        "donates", //
-        "reserves_material",
-        "searches_book",  //
-        "searches_movie", //
-        "book_has",       //
-        "writes",         //
-        "publishes",
-        "is_part_of",
-        "directs", //
-        "releases",
+        "reserves_room", // Need to validate Dates
+        "organizes",     //
+        "registers",     //
+        "loans",         // Need to Validate dates
+        "donates",       //
+        "reserves_material", // Need to Validate Dates
+        "searches_book",   //
+        "searches_movie",  //
+        "book_has",        //
+        "writes",          //
+        "publishes",       // Need to validate dates
+        "is_part_of",      //
+        "directs",         //
+        "releases",        // Need to validate dates
         "movie_has",       //
         "staff",           //
         "member",          // Need to validate dates
