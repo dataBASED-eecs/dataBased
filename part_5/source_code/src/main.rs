@@ -14,6 +14,21 @@ use std::collections::HashMap;
 use std::env;
 use std::process::Command;
 
+fn random_at_least_once<'a, I: Clone + 'a>(iter: impl IntoIterator<Item=I>, random: &'a mut (impl Rng + 'a)) -> impl IntoIterator<Item=I> + 'a {
+    let items: Vec<_> = iter.into_iter().collect();
+    let mut unused_indexes: Vec<_> = (0..items.len()).collect();
+    unused_indexes.shuffle(random);
+    std::iter::from_fn(move || {
+        let index = if let Some(index) = unused_indexes.pop() {
+            index
+        } else {
+            random.gen_range(0..items.len())
+        };
+        
+        Some(items[index].clone())
+    })
+}
+
 async fn create_tables(pool: &Pool<MySql>) -> Result<(), sqlx::Error> {
     sqlx::query(
         r#"
@@ -900,32 +915,29 @@ async fn populate_tables(pool: &Pool<MySql>) -> Result<(), sqlx::Error> {
     }
     let mut hash_table: HashMap<i32, i32> = HashMap::new();
 
-    // Todo, remove all series that don't have a book or have just one book
-    for book_id in &book_ids {
-        if rand::random() {
-            let rand_series: i32 = rng.gen_range(1..20);
+    let series_ids = 1..20;
+    let random_series = random_at_least_once(series_ids, &mut rng);
+    for (book_id, rand_series) in book_ids[..book_ids.len() / 2].iter().zip(random_series) {
+        // Insert if not present
+        hash_table.entry(rand_series).or_insert(1);
 
-            // Insert if not present
-            hash_table.entry(rand_series).or_insert(1);
+        // Get a mutable reference to the value
+        if let Some(temp) = hash_table.get_mut(&rand_series) {
+            sqlx::query(
+                r#"
+                    INSERT INTO is_part_of (Book_ID, Book_Series_ID, Seq_Order)
+                    VALUES
+                    (?, ?, ?)
+                "#,
+            )
+            .bind(book_id)
+            .bind(rand_series)
+            .bind(*temp)
+            .execute(pool)
+            .await?;
 
-            // Get a mutable reference to the value
-            if let Some(temp) = hash_table.get_mut(&rand_series) {
-                sqlx::query(
-                    r#"
-                        INSERT INTO is_part_of (Book_ID, Book_Series_ID, Seq_Order)
-                        VALUES
-                        (?, ?, ?)
-                    "#,
-                )
-                .bind(book_id)
-                .bind(rand_series)
-                .bind(*temp)
-                .execute(pool)
-                .await?;
-
-                // Increment the value in the HashMap
-                *temp += 1;
-            }
+            // Increment the value in the HashMap
+            *temp += 1;
         }
     }
 
