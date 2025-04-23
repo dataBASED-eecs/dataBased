@@ -1,4 +1,4 @@
-use chrono::{Duration, NaiveDate, NaiveDateTime, NaiveTime};
+use chrono::{Duration, NaiveDate, NaiveDateTime, NaiveTime, TimeDelta};
 use dotenvy::dotenv;
 use fake::locales::EN;
 use fake::{
@@ -229,7 +229,7 @@ async fn create_tables(pool: &Pool<MySql>) -> Result<(), sqlx::Error> {
             CREATE TABLE IF NOT EXISTS reserves_room (
                 Room_ID INT NOT NULL,
                 Member_ID INT NOT NULL,
-                Duration TIME NOT NULL,
+                Duration INT NOT NULL,
                 Date DATETIME NOT NULL,
                 PRIMARY KEY (Room_ID, Member_ID),
                 FOREIGN KEY (Room_ID) REFERENCES room(Number) ON DELETE CASCADE,
@@ -273,8 +273,8 @@ async fn create_tables(pool: &Pool<MySql>) -> Result<(), sqlx::Error> {
             CREATE TABLE IF NOT EXISTS loans (
                 Member_ID INT NOT NULL,
                 Material_ID INT NOT NULL,
-                Duration TIME NOT NULL,
-                Start_Date DATETIME NOT NULL,
+                Duration INT,
+                Start_Date DATE NOT NULL,
                 PRIMARY KEY (Member_ID, Material_ID),
                 FOREIGN KEY (Member_ID) REFERENCES member(Member_ID) ON DELETE CASCADE,
                 FOREIGN KEY (Material_ID) REFERENCES material(ID) ON DELETE CASCADE
@@ -375,7 +375,7 @@ async fn create_tables(pool: &Pool<MySql>) -> Result<(), sqlx::Error> {
             Publisher_ID INT NOT NULL,
             Book_ID VARCHAR(20) NOT NULL,
             Publish_Date DATE NOT NULL,
-            PRIMARY KEY (Publisher_ID, Book_ID),
+            PRIMARY KEY (Book_ID),
             FOREIGN KEY (Publisher_ID) REFERENCES publisher(ID) ON DELETE CASCADE,
             FOREIGN KEY (Book_ID) REFERENCES book(ISBN) ON DELETE CASCADE
         );
@@ -419,7 +419,7 @@ async fn create_tables(pool: &Pool<MySql>) -> Result<(), sqlx::Error> {
                 Studio_ID INT NOT NULL,
                 Movie_ID VARCHAR(24) NOT NULL,
                 Release_Date DATE NOT NULL,
-                PRIMARY KEY (Studio_ID, Movie_ID),
+                PRIMARY KEY (Movie_ID),
                 FOREIGN KEY (Studio_ID) REFERENCES studio(ID) ON DELETE CASCADE,
                 FOREIGN KEY (Movie_ID) REFERENCES movie(ISAN) ON DELETE CASCADE
             );
@@ -447,9 +447,18 @@ async fn create_tables(pool: &Pool<MySql>) -> Result<(), sqlx::Error> {
 
 async fn populate_tables(pool: &Pool<MySql>) -> Result<(), sqlx::Error> {
     let mut rng = rand::thread_rng();
+    let library_open_date: NaiveDate = NaiveDate::from_ymd_opt(2022, 9, 28).unwrap();
+    let current_day: NaiveDate = NaiveDate::from_ymd_opt(2025, 4, 23).unwrap();
+    let oldest_person_date: NaiveDate = NaiveDate::from_ymd_opt(1965, 1, 6).unwrap();
+    let youngest_person_date: NaiveDate = NaiveDate::from_ymd_opt(2027, 4, 23).unwrap();
+
+    let days_age_range = (oldest_person_date - youngest_person_date).num_days();
+    let days_library_open_range = (current_day - library_open_date).num_days();
 
     for _ in 1..100 {
-        let fake_date: NaiveDate = Date(EN).fake();
+        let rand_range = rng.gen_range(1..days_age_range);
+        let fake_date: NaiveDate = oldest_person_date + Duration::days(rand_range);
+
         let fake_email: String = FreeEmail(EN).fake();
         let fake_first_name: String = FirstName().fake();
         let fake_last_name: String = LastName().fake();
@@ -477,14 +486,15 @@ async fn populate_tables(pool: &Pool<MySql>) -> Result<(), sqlx::Error> {
         .await?;
 
     for member in &members {
-        let one_in_four = rng.gen_range(0..4) == 0;
+        let one_in_four = rng.gen_range(0..10) == 0;
 
         if one_in_four {
             let mut fake_salary: f64 = rng.gen_range(0.00..9999.99);
             fake_salary = (fake_salary * 100.0).floor() / 100.0;
 
             let fake_email: String = FreeEmail(EN).fake();
-            let fake_date: NaiveDate = Date(EN).fake();
+            let rand_range = rng.gen_range(0..days_library_open_range);
+            let fake_date: NaiveDate = library_open_date + Duration::days(rand_range);
 
             let area_code: u16 = rng.gen_range(100..1000); // (xxx)
             let prefix: u16 = rng.gen_range(100..1000); // xxx-
@@ -625,7 +635,7 @@ async fn populate_tables(pool: &Pool<MySql>) -> Result<(), sqlx::Error> {
                 "#,
         )
         .bind(isan)
-        .bind(book_title)
+        .bind(movie_title)
         .execute(pool)
         .await?;
     }
@@ -679,7 +689,16 @@ async fn populate_tables(pool: &Pool<MySql>) -> Result<(), sqlx::Error> {
     }
 
     for _ in 1..10 {
-        let fake_start_time: NaiveDateTime = DateTime(EN).fake();
+        let rand_start_date_offset = rng.gen_range(1..days_library_open_range);
+        let random_time_offset = rng.gen_range(1..720);
+
+        let fake_start_time: NaiveDateTime = NaiveDateTime::new(
+            library_open_date + Duration::days(rand_start_date_offset),
+            NaiveTime::from_hms_opt(0, 0, 0).expect("Invalid time"),
+        )
+        .checked_add_signed(Duration::minutes(random_time_offset))
+        .unwrap();
+
         let random_minutes: i64 = rng.gen_range(1..1000);
         let fake_end_time: NaiveDateTime = fake_start_time + Duration::minutes(random_minutes);
         let fake_latitude: f32 = rng.gen_range(-90.0..90.0);
@@ -712,7 +731,7 @@ async fn populate_tables(pool: &Pool<MySql>) -> Result<(), sqlx::Error> {
         let mut shuffled_staff = staff.clone();
         shuffled_staff.shuffle(&mut rng);
 
-        let mut shuffled_members = staff.clone();
+        let mut shuffled_members = member_conv.clone();
         shuffled_members.shuffle(&mut rng);
 
         let unique_random_staff: Vec<i32> = shuffled_staff
@@ -981,13 +1000,14 @@ async fn populate_tables(pool: &Pool<MySql>) -> Result<(), sqlx::Error> {
     }
 
     for room in 1..10 {
+        let mut room_start_time = library_open_date;
+
         for member in &member_conv {
             if rand::random() {
-                let fake_start_time: NaiveDateTime = DateTime(EN).fake();
-                let random_time: NaiveTime = Time(EN).fake();
+                let random_time = rng.gen_range(1..120);
                 sqlx::query(
-                    r#"
-                        INSERT INTO reserves_room (Room_ID, Member_ID, Duration, Date)
+                    r#"reserves_room
+                        INSERT INTO  (Room_ID, Member_ID, Duration, Date)
                         VALUES
                         (?, ?, ?, ?)
                     "#,
@@ -995,18 +1015,20 @@ async fn populate_tables(pool: &Pool<MySql>) -> Result<(), sqlx::Error> {
                 .bind(room)
                 .bind(member)
                 .bind(random_time)
-                .bind(fake_start_time)
+                .bind(room_start_time)
                 .execute(pool)
                 .await?;
+                room_start_time += Duration::minutes(random_time);
             }
         }
     }
 
     for material in 1..999 {
+        let mut fake_start_time = library_open_date;
         for member in &member_conv {
             if rand::random() {
-                let fake_start_time: NaiveDateTime = DateTime(EN).fake();
-                let random_time: NaiveTime = Time(EN).fake();
+                let random_time: Option<i64> =
+                    rand::random::<bool>().then(|| rng.gen_range(0..20000));
                 sqlx::query(
                     r#"
                         INSERT INTO loans (Member_ID, Material_ID, Duration, Start_Date)
@@ -1020,6 +1042,12 @@ async fn populate_tables(pool: &Pool<MySql>) -> Result<(), sqlx::Error> {
                 .bind(fake_start_time)
                 .execute(pool)
                 .await?;
+
+                if let Some(random_time) = random_time {
+                    fake_start_time += Duration::minutes(random_time);
+                } else {
+                    break;
+                }
             }
         }
     }
@@ -1027,7 +1055,13 @@ async fn populate_tables(pool: &Pool<MySql>) -> Result<(), sqlx::Error> {
     for material in 1..999 {
         for member in &member_conv {
             if rand::random() {
-                let fake_start_time: NaiveDateTime = DateTime(EN).fake();
+                let rand_range = rng.gen_range(0..days_library_open_range);
+
+                let fake_start_time: NaiveDateTime = NaiveDateTime::new(
+                    library_open_date + Duration::days(rand_range),
+                    NaiveTime::from_hms_opt(rng.gen_range(0..24), rng.gen_range(0..60), rng.gen_range(0..60)).expect("Invalid time"),
+                );
+
                 sqlx::query(
                     r#"
                         INSERT INTO reserves_material (Member_ID, Material_ID, Reservation_Date)
