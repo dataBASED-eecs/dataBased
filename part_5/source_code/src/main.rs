@@ -881,7 +881,9 @@ async fn populate_tables(pool: &Pool<MySql>) -> Result<(), sqlx::Error> {
 
     let book_copies: Vec<i32> = book_copy_tup.iter().map(|(x,)| *x).collect();
 
-    for copy in &book_copies {
+    
+    let rand_books = random_at_least_once(&book_ids, &mut rng);
+    for (copy, book_id) in book_copies.iter().zip(rand_books) {
         sqlx::query(
             r#"
                 INSERT INTO book_has (Copy_ID, Book_ID)
@@ -890,7 +892,7 @@ async fn populate_tables(pool: &Pool<MySql>) -> Result<(), sqlx::Error> {
                 "#,
         )
         .bind(copy)
-        .bind(book_ids.choose(&mut rng).unwrap())
+        .bind(book_id)
         .execute(pool)
         .await?;
     }
@@ -900,7 +902,8 @@ async fn populate_tables(pool: &Pool<MySql>) -> Result<(), sqlx::Error> {
         .await?;
 
     let movie_copies: Vec<i32> = movie_copy_tup.iter().map(|(x,)| *x).collect();
-    for copy in movie_copies {
+    let rand_movies = random_at_least_once(&movie_ids, &mut rng);
+    for (copy, movie_id) in movie_copies.iter().zip(rand_movies) {
         sqlx::query(
             r#"
                 INSERT INTO movie_has (Copy_ID, Movie_ID)
@@ -909,7 +912,7 @@ async fn populate_tables(pool: &Pool<MySql>) -> Result<(), sqlx::Error> {
                 "#,
         )
         .bind(copy)
-        .bind(movie_ids.choose(&mut rng).unwrap())
+        .bind(movie_id)
         .execute(pool)
         .await?;
     }
@@ -941,8 +944,9 @@ async fn populate_tables(pool: &Pool<MySql>) -> Result<(), sqlx::Error> {
         }
     }
 
-    for book in &book_ids {
-        let rand_publisher = rng.gen_range(1..25);
+    let publisher_ids = 1..25;
+    let rand_publishers = random_at_least_once(publisher_ids, &mut rng);
+    for (book, rand_publisher) in book_ids.iter().zip(rand_publishers) {
         let rand_date: NaiveDate = Date(EN).fake();
         sqlx::query(
             r#"
@@ -958,8 +962,9 @@ async fn populate_tables(pool: &Pool<MySql>) -> Result<(), sqlx::Error> {
         .await?;
     }
 
-    for movie in &movie_ids {
-        let rand_studio = rng.gen_range(1..25);
+    let studio_ids = 1..25;
+    let rand_studios = random_at_least_once(studio_ids, &mut rng);
+    for (movie, rand_studio) in movie_ids.iter().zip(rand_studios) {
         let rand_date: NaiveDate = Date(EN).fake();
         sqlx::query(
             r#"
