@@ -1,23 +1,18 @@
 use chrono::{Duration, NaiveDate, NaiveDateTime, NaiveTime};
 use dotenvy::dotenv;
-use fake::faker::phone_number::raw::PhoneNumber;
 use fake::locales::EN;
 use fake::{
     faker::barcode::raw::Isbn10, faker::barcode::raw::Isbn13, faker::chrono::raw::Date,
-    faker::chrono::raw::DateTime, faker::company::en::CompanyName, faker::internet::raw::FreeEmail,
-    faker::lorem::en::Sentence, faker::name::en::FirstName, faker::name::en::LastName, faker::chrono::raw::Time,
-    faker::number::en::Digit, Fake, Dummy
+    faker::chrono::raw::DateTime, faker::chrono::raw::Time, faker::company::en::CompanyName,
+    faker::internet::raw::FreeEmail, faker::lorem::en::Sentence, faker::name::en::FirstName,
+    faker::name::en::LastName, Fake,
 };
 use rand::seq::SliceRandom;
 use rand::Rng;
-use sqlx::{mysql::MySqlPoolOptions, types::BigDecimal, MySql, Pool, Row};
+use sqlx::{mysql::MySqlPoolOptions, MySql, Pool};
 use std::collections::HashMap;
 use std::env;
-use std::{
-    f32::MIN_EXP,
-    process::{Child, Command},
-};
-use tokio;
+use std::process::Command;
 
 async fn create_tables(pool: &Pool<MySql>) -> Result<(), sqlx::Error> {
     sqlx::query(
@@ -601,7 +596,7 @@ async fn populate_tables(pool: &Pool<MySql>) -> Result<(), sqlx::Error> {
         .await?;
     }
 
-    for i in 1..100 {
+    for _ in 1..100 {
         let book_title: String = Sentence(1..20).fake();
 
         let bytes: [u8; 12] = rand::random();
@@ -972,7 +967,7 @@ async fn populate_tables(pool: &Pool<MySql>) -> Result<(), sqlx::Error> {
         for member in &member_conv {
             if rand::random() {
                 let fake_start_time: NaiveDateTime = DateTime(EN).fake();
-                let random_time : NaiveTime = Time(EN).fake();
+                let random_time: NaiveTime = Time(EN).fake();
                 sqlx::query(
                     r#"
                         INSERT INTO reserves_room (Room_ID, Member_ID, Duration, Date)
@@ -994,7 +989,7 @@ async fn populate_tables(pool: &Pool<MySql>) -> Result<(), sqlx::Error> {
         for member in &member_conv {
             if rand::random() {
                 let fake_start_time: NaiveDateTime = DateTime(EN).fake();
-                let random_time : NaiveTime = Time(EN).fake();
+                let random_time: NaiveTime = Time(EN).fake();
                 sqlx::query(
                     r#"
                         INSERT INTO loans (Member_ID, Material_ID, Duration, Start_Date)
@@ -1066,35 +1061,35 @@ async fn main() -> Result<(), sqlx::Error> {
         .await?;
 
     for row in [
-        "reserves_room", // Need to validate Dates
-        "organizes",     //
-        "registers",     //
-        "loans",         // Need to Validate dates
-        "donates",       //
+        "reserves_room",     // Need to validate Dates
+        "organizes",         //
+        "registers",         //
+        "loans",             // Need to Validate dates
+        "donates",           //
         "reserves_material", // Need to Validate Dates
-        "searches_book",   //
-        "searches_movie",  //
-        "book_has",        //
-        "writes",          //
-        "publishes",       // Need to validate dates
-        "is_part_of",      //
-        "directs",         //
-        "releases",        // Need to validate dates
-        "movie_has",       //
-        "staff",           //
-        "member",          // Need to validate dates
-        "book",            //
-        "book_series",     //
-        "movie",           //
-        "publisher",       //
-        "author",          //
-        "director",        //
-        "studio",          //
-        "book_copy",       //
-        "movie_copy",      //
-        "material",        //
-        "room",            //
-        "community_event", // Need to validate dates
+        "searches_book",     //
+        "searches_movie",    //
+        "book_has",          //
+        "writes",            //
+        "publishes",         // Need to validate dates
+        "is_part_of",        //
+        "directs",           //
+        "releases",          // Need to validate dates
+        "movie_has",         //
+        "staff",             //
+        "member",            // Need to validate dates
+        "book",              //
+        "book_series",       //
+        "movie",             //
+        "publisher",         //
+        "author",            //
+        "director",          //
+        "studio",            //
+        "book_copy",         //
+        "movie_copy",        //
+        "material",          //
+        "room",              //
+        "community_event",   // Need to validate dates
     ] {
         let query = format!("DROP TABLE IF EXISTS {};", row);
 
