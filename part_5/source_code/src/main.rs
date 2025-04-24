@@ -1032,7 +1032,7 @@ async fn populate_tables(pool: &Pool<MySql>) -> Result<(), sqlx::Error> {
                 .bind(room_start_time)
                 .execute(pool)
                 .await?;
-                room_start_time += Duration::minutes(random_time);
+                room_start_time += Duration::minutes(random_time) + Duration::days(rng.gen_range(0..3));
             }
         }
     }
