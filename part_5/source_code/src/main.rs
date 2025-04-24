@@ -1014,7 +1014,7 @@ async fn populate_tables(pool: &Pool<MySql>) -> Result<(), sqlx::Error> {
     }
 
     for room in 1..10 {
-        let mut room_start_time = library_open_date;
+        let mut room_start_time: NaiveDateTime = library_open_date.into();
 
         for member in &member_conv {
             if rand::random() {
