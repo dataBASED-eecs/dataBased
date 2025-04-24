@@ -1,11 +1,20 @@
 use chrono::{Duration, NaiveDate, NaiveDateTime, NaiveTime, TimeDelta};
 use dotenvy::dotenv;
+<<<<<<< HEAD
+=======
+use fake::faker::chrono::ar_sa::Duration;
+use fake::faker::phone_number::raw::PhoneNumber;
+>>>>>>> f73496b (started validating data population)
 use fake::locales::EN;
 use fake::{
     faker::barcode::raw::Isbn10, faker::barcode::raw::Isbn13, faker::chrono::raw::Date,
     faker::chrono::raw::DateTime, faker::chrono::raw::Time, faker::company::en::CompanyName,
     faker::internet::raw::FreeEmail, faker::lorem::en::Sentence, faker::name::en::FirstName,
+<<<<<<< HEAD
     faker::name::en::LastName, Fake,
+=======
+    faker::name::en::LastName, faker::number::en::Digit, Dummy, Fake,
+>>>>>>> f73496b (started validating data population)
 };
 use rand::seq::SliceRandom;
 use rand::Rng;
@@ -14,10 +23,7 @@ use std::collections::HashMap;
 use std::env;
 use std::process::Command;
 
-fn random_at_least_once<'a, I: Clone + 'a>(
-    iter: impl IntoIterator<Item = I>,
-    random: &'a mut (impl Rng + 'a),
-) -> impl IntoIterator<Item = I> + 'a {
+fn random_at_least_once<'a, I: Clone + 'a>(iter: impl IntoIterator<Item=I>, random: &'a mut (impl Rng + 'a)) -> impl IntoIterator<Item=I> + 'a {
     let items: Vec<_> = iter.into_iter().collect();
     let mut unused_indexes: Vec<_> = (0..items.len()).collect();
     unused_indexes.shuffle(random);
@@ -27,7 +33,7 @@ fn random_at_least_once<'a, I: Clone + 'a>(
         } else {
             random.gen_range(0..items.len())
         };
-
+        
         Some(items[index].clone())
     })
 }
@@ -455,11 +461,10 @@ async fn populate_tables(pool: &Pool<MySql>) -> Result<(), sqlx::Error> {
     let oldest_person_date: NaiveDate = NaiveDate::from_ymd_opt(1965, 1, 6).unwrap();
     let youngest_person_date: NaiveDate = NaiveDate::from_ymd_opt(2027, 4, 23).unwrap();
 
-    let days_age_range = (youngest_person_date - oldest_person_date).num_days();
+    let days_age_range = (oldest_person_date - youngest_person_date).num_days();
     let days_library_open_range = (current_day - library_open_date).num_days();
 
     for _ in 1..100 {
-        print!("{}", days_age_range);
         let rand_range = rng.gen_range(1..days_age_range);
         let fake_date: NaiveDate = oldest_person_date + Duration::days(rand_range);
 
@@ -625,8 +630,13 @@ async fn populate_tables(pool: &Pool<MySql>) -> Result<(), sqlx::Error> {
         .await?;
     }
 
+<<<<<<< HEAD
     for _ in 1..100 {
+        let book_title: String = Sentence(1..20).fake();
+=======
+    for i in 1..100 {
         let movie_title: String = Sentence(1..20).fake();
+>>>>>>> f73496b (started validating data population)
 
         let bytes: [u8; 12] = rand::random();
         let isan: String = bytes.iter().map(|b| format!("{b:02x}")).collect();
@@ -904,6 +914,7 @@ async fn populate_tables(pool: &Pool<MySql>) -> Result<(), sqlx::Error> {
 
     let book_copies: Vec<i32> = book_copy_tup.iter().map(|(x,)| *x).collect();
 
+    
     let rand_books = random_at_least_once(&book_ids, &mut rng);
     for (copy, book_id) in book_copies.iter().zip(rand_books) {
         sqlx::query(
@@ -938,7 +949,6 @@ async fn populate_tables(pool: &Pool<MySql>) -> Result<(), sqlx::Error> {
         .execute(pool)
         .await?;
     }
-
     let mut hash_table: HashMap<i32, i32> = HashMap::new();
 
     let series_ids = 1..20;
@@ -970,12 +980,7 @@ async fn populate_tables(pool: &Pool<MySql>) -> Result<(), sqlx::Error> {
     let publisher_ids = 1..25;
     let rand_publishers = random_at_least_once(publisher_ids, &mut rng);
     for (book, rand_publisher) in book_ids.iter().zip(rand_publishers) {
-        let mut rand_date: NaiveDate = Date(EN).fake();
-
-        while rand_date > library_open_date {
-            rand_date = Date(EN).fake();
-        }
-
+        let rand_date: NaiveDate = Date(EN).fake();
         sqlx::query(
             r#"
                 INSERT INTO publishes (Publisher_ID, Book_ID, Publish_Date)
@@ -993,12 +998,7 @@ async fn populate_tables(pool: &Pool<MySql>) -> Result<(), sqlx::Error> {
     let studio_ids = 1..25;
     let rand_studios = random_at_least_once(studio_ids, &mut rng);
     for (movie, rand_studio) in movie_ids.iter().zip(rand_studios) {
-        let mut rand_date: NaiveDate = Date(EN).fake();
-
-        while rand_date > library_open_date {
-            rand_date = Date(EN).fake();
-        }
-
+        let rand_date: NaiveDate = Date(EN).fake();
         sqlx::query(
             r#"
                 INSERT INTO releases (Studio_ID, Movie_ID, Release_Date)
@@ -1018,10 +1018,15 @@ async fn populate_tables(pool: &Pool<MySql>) -> Result<(), sqlx::Error> {
 
         for member in &member_conv {
             if rand::random() {
+<<<<<<< HEAD
+                let fake_start_time: NaiveDateTime = DateTime(EN).fake();
+                let random_time: NaiveTime = Time(EN).fake();
+=======
                 let random_time = rng.gen_range(1..120);
+>>>>>>> f73496b (started validating data population)
                 sqlx::query(
-                    r#"
-                        INSERT INTO reserves_room (Room_ID, Member_ID, Duration, Date)
+                    r#"reserves_room
+                        INSERT INTO  (Room_ID, Member_ID, Duration, Date)
                         VALUES
                         (?, ?, ?, ?)
                     "#,
@@ -1041,8 +1046,13 @@ async fn populate_tables(pool: &Pool<MySql>) -> Result<(), sqlx::Error> {
         let mut fake_start_time = library_open_date;
         for member in &member_conv {
             if rand::random() {
+<<<<<<< HEAD
+                let fake_start_time: NaiveDateTime = DateTime(EN).fake();
+                let random_time: NaiveTime = Time(EN).fake();
+=======
                 let random_time: Option<i64> =
                     rand::random::<bool>().then(|| rng.gen_range(0..20000));
+>>>>>>> f73496b (started validating data population)
                 sqlx::query(
                     r#"
                         INSERT INTO loans (Member_ID, Material_ID, Duration, Start_Date)
@@ -1067,39 +1077,28 @@ async fn populate_tables(pool: &Pool<MySql>) -> Result<(), sqlx::Error> {
     }
 
     for material in 1..999 {
-        let mut shuffled_members = member_conv.clone();
-        shuffled_members.shuffle(&mut rng);
+        for member in &member_conv {
+            if rand::random() {
+                let rand_range = rng.gen_range(0..days_library_open_range);
 
-        let unique_random_members: Vec<i32> = shuffled_members
-            .into_iter()
-            .take(rng.gen_range(0..5))
-            .collect();
+                let fake_start_time: NaiveDateTime = NaiveDateTime::new(
+                    library_open_date + Duration::days(rand_range),
+                    NaiveTime::from_hms_opt(rng.gen_range(0..24), rng.gen_range(0..60), rng.gen_range(0..60)).expect("Invalid time"),
+                );
 
-        for member in &unique_random_members {
-            let rand_range = rng.gen_range(0..days_library_open_range);
-
-            let fake_start_time: NaiveDateTime = NaiveDateTime::new(
-                library_open_date + Duration::days(rand_range),
-                NaiveTime::from_hms_opt(
-                    rng.gen_range(0..24),
-                    rng.gen_range(0..60),
-                    rng.gen_range(0..60),
-                )
-                .expect("Invalid time"),
-            );
-
-            sqlx::query(
-                r#"
+                sqlx::query(
+                    r#"
                         INSERT INTO reserves_material (Member_ID, Material_ID, Reservation_Date)
                         VALUES
                         (?, ?, ?)
                     "#,
-            )
-            .bind(member)
-            .bind(material)
-            .bind(fake_start_time)
-            .execute(pool)
-            .await?;
+                )
+                .bind(member)
+                .bind(material)
+                .bind(fake_start_time)
+                .execute(pool)
+                .await?;
+            }
         }
     }
 
