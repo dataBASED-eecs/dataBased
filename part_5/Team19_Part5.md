@@ -371,15 +371,15 @@ The following shows all tables:
 To see the contents of all the tables, please see [database_output.md](https://github.com/dataBASED-eecs/dataBased/blob/main/part_5/database_output.md)<br/>
 
 ## Relevant Queries
-### All Materials with associated names and IDs
+### All Materials
 ```
 WITH book_copy_w_info AS (
-    SELECT book_has.Copy_ID, 'Book' AS type, book_has.Book_ID, NULL AS Movie_ID, book.Title
+    SELECT book_has.Copy_ID, 'Book' AS Type, book_has.Book_ID, NULL AS Movie_ID, book.Title
     FROM book_has
     INNER JOIN book ON book_has.Book_ID = book.ISBN
 ),
 movie_copy_w_info AS (
-    SELECT movie_has.Copy_ID, 'Movie' AS type, NULL AS Book_ID, movie_has.Movie_ID, movie.Title
+    SELECT movie_has.Copy_ID, 'Movie' AS Type, NULL AS Book_ID, movie_has.Movie_ID, movie.Title
     FROM movie_has
     INNER JOIN movie ON movie_has.Movie_ID = movie.ISAN
 )
@@ -388,6 +388,41 @@ UNION
 SELECT * FROM movie_copy_w_info
 ORDER BY Copy_ID;
 ```
-### All Checko
+### All Room Reservations
+```
+SELECT reserves_room.*, First_Name, Last_Name FROM reserves_room NATURAL JOIN member;
+```
+
+### Members who have never reserved a room
+```
+SELECT Member_ID, First_Name, Last_Name FROM member AS m
+WHERE NOT EXISTS (
+  SELECT member_id FROM reserves_room WHERE member_id=m.member_id
+);
+```
+
+### View All Donations
+```
+SELECT * FROM donates;
+```
+
+### View Donations Leaderboard
+```
+WITH donation_leadboard_gt_0 AS (
+    SELECT Member_ID, First_Name, Last_Name, COUNT(Member_ID) AS Num_Of_Donations
+    FROM member 
+    NATURAL JOIN donates
+    GROUP BY Member_ID, First_Name, Last_Name  -- Ensure all selected columns are in GROUP BY
+),
+donation_leaderboard_eq_0 AS (
+    SELECT Member_ID, First_Name, Last_Name, 0 AS Num_Of_Donations 
+    FROM member AS m 
+    WHERE NOT EXISTS (SELECT 1 FROM donates WHERE donates.Member_ID = m.Member_ID)
+)
+SELECT * FROM donation_leadboard_gt_0 
+UNION 
+SELECT * FROM donation_leaderboard_eq_0 
+ORDER BY Num_Of_Donations DESC;
+```
 
 ## Meeting Logs
