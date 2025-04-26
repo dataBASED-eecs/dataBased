@@ -5,6 +5,7 @@
 ## Choice of Platform
 
 ## DDL
+Note: The DDL is not in order because we just provided the language to create the relations. For the acutally correct order, please see the [Source Code](https://github.com/dataBASED-eecs/dataBased/blob/main/part_5/source_code/src/main.rs)
 ### Entities
 #### Author
 ```
