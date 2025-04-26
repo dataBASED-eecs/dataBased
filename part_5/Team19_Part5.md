@@ -57,6 +57,17 @@ CREATE TABLE IF NOT EXISTS community_event
   );
 ```
 
+#### Director
+```
+CREATE TABLE IF NOT EXISTS director 
+  (
+  ID INT NOT NULL AUTO_INCREMENT,
+  First_Name TEXT NOT NULL,
+  Last_Name TEXT NOT NULL,
+  PRIMARY KEY (ID)
+  );
+```
+
 ### Relationships
 #### Book Has
 ```
@@ -66,6 +77,52 @@ CREATE TABLE IF NOT EXISTS book_has (
   PRIMARY KEY (Copy_ID),
   FOREIGN KEY (Copy_ID) REFERENCES book_copy(ID) ON DELETE CASCADE,
   FOREIGN KEY (Book_ID) REFERENCES book(ISBN) ON DELETE CASCADE
+);
+```
+
+#### Directs
+```
+CREATE TABLE IF NOT EXISTS directs (
+    Director_ID INT NOT NULL,
+    Movie_ID VARCHAR(24) NOT NULL,
+    PRIMARY KEY (Director_ID, Movie_ID),
+    FOREIGN KEY (Director_ID) REFERENCES director(ID) ON DELETE CASCADE,
+    FOREIGN KEY (Movie_ID) REFERENCES movie(ISAN) ON DELETE CASCADE
+);
+```
+#### Donates
+```
+CREATE TABLE IF NOT EXISTS donates (
+    Member_ID INT NOT NULL,
+    Material_ID INT NOT NULL,
+    PRIMARY KEY (Member_ID, Material_ID),
+    FOREIGN KEY (Member_ID) REFERENCES member(Member_ID) ON DELETE CASCADE,
+    FOREIGN KEY (Material_ID) REFERENCES material(ID) ON DELETE CASCADE
+);
+```
+
+#### Is Part Of
+```
+CREATE TABLE IF NOT EXISTS is_part_of (
+    Book_ID VARCHAR(20) NOT NULL,
+    Book_Series_ID INT NOT NULL,
+    Seq_Order INT NOT NULL,
+    PRIMARY KEY (Book_ID),
+    FOREIGN KEY (Book_ID) REFERENCES book(ISBN) ON DELETE CASCADE,
+    FOREIGN KEY (Book_Series_ID) REFERENCES book_series(ID) ON DELETE CASCADE
+);
+```
+
+#### Loans
+```
+CREATE TABLE IF NOT EXISTS loans (
+    Member_ID INT NOT NULL,
+    Material_ID INT NOT NULL,
+    Duration INT,
+    Start_Date DATE NOT NULL,
+    PRIMARY KEY (Member_ID, Material_ID),
+    FOREIGN KEY (Member_ID) REFERENCES member(Member_ID) ON DELETE CASCADE,
+    FOREIGN KEY (Material_ID) REFERENCES material(ID) ON DELETE CASCADE
 );
 ```
 
