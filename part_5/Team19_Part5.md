@@ -371,5 +371,23 @@ The following shows all tables:
 To see the contents of all the tables, please see [database_output.md](https://github.com/dataBASED-eecs/dataBased/blob/main/part_5/database_output.md)<br/>
 
 ## Relevant Queries
+### All Materials with associated names and IDs
+```
+WITH book_copy_w_info AS (
+    SELECT book_has.Copy_ID, 'Book' AS type, book_has.Book_ID, NULL AS Movie_ID, book.Title
+    FROM book_has
+    INNER JOIN book ON book_has.Book_ID = book.ISBN
+),
+movie_copy_w_info AS (
+    SELECT movie_has.Copy_ID, 'Movie' AS type, NULL AS Book_ID, movie_has.Movie_ID, movie.Title
+    FROM movie_has
+    INNER JOIN movie ON movie_has.Movie_ID = movie.ISAN
+)
+SELECT * FROM book_copy_w_info
+UNION
+SELECT * FROM movie_copy_w_info
+ORDER BY Copy_ID;
+```
+### All Checko
 
 ## Meeting Logs
