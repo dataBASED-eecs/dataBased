@@ -121,6 +121,40 @@ CREATE TABLE IF NOT EXISTS publisher
   );
 ```
 
+#### Room
+```
+CREATE TABLE IF NOT EXISTS room 
+  (
+  Number INT NOT NULL AUTO_INCREMENT,
+  Capacity INT NOT NULL,
+  PRIMARY KEY (Number)
+  );
+```
+
+#### Staff
+```
+CREATE TABLE IF NOT EXISTS staff 
+  (
+  Member_ID INT NOT NULL,
+  Salary DECIMAL(6, 2) NOT NULL,
+  Work_Phone VARCHAR(15) NOT NULL,
+  Start_Date DATE NOT NULL,
+  Work_Email TEXT NOT NULL,
+  PRIMARY KEY (Member_ID),
+  FOREIGN KEY (Member_ID) REFERENCES member(Member_id) ON DELETE CASCADE
+  );
+```
+
+#### Studio
+```
+CREATE TABLE IF NOT EXISTS studio 
+  (
+  ID INT NOT NULL AUTO_INCREMENT,
+  Name TEXT NOT NULL,
+  PRIMARY KEY (ID)
+  );
+```
+
 ### Relationships
 #### Book Has
 ```
@@ -221,6 +255,76 @@ CREATE TABLE IF NOT EXISTS registers (
     PRIMARY KEY (Member_ID, Community_Event_ID),
     FOREIGN KEY (Member_ID) REFERENCES member(Member_ID) ON DELETE CASCADE,
     FOREIGN KEY (Community_Event_ID) REFERENCES community_event(ID) ON DELETE CASCADE
+);
+```
+
+#### Releases
+```
+CREATE TABLE IF NOT EXISTS releases (
+    Studio_ID INT NOT NULL,
+    Movie_ID VARCHAR(24) NOT NULL,
+    Release_Date DATE NOT NULL,
+    PRIMARY KEY (Movie_ID),
+    FOREIGN KEY (Studio_ID) REFERENCES studio(ID) ON DELETE CASCADE,
+    FOREIGN KEY (Movie_ID) REFERENCES movie(ISAN) ON DELETE CASCADE
+);
+```
+
+#### Reserves Material
+```
+CREATE TABLE IF NOT EXISTS reserves_material (
+    Member_ID INT NOT NULL,
+    Material_ID INT NOT NULL,
+    Reservation_Date DATETIME NOT NULL,
+    PRIMARY KEY (Member_ID, Material_ID),
+    FOREIGN KEY (Member_ID) REFERENCES member(Member_ID) ON DELETE CASCADE,
+    FOREIGN KEY (Material_ID) REFERENCES material(ID) ON DELETE CASCADE
+);
+```
+
+#### Reserves Room
+```
+CREATE TABLE IF NOT EXISTS reserves_room (
+    Room_ID INT NOT NULL,
+    Member_ID INT NOT NULL,
+    Duration INT NOT NULL,
+    Date DATETIME NOT NULL,
+    PRIMARY KEY (Room_ID, Member_ID),
+    FOREIGN KEY (Room_ID) REFERENCES room(Number) ON DELETE CASCADE,
+    FOREIGN KEY (Member_ID) REFERENCES member(Member_ID) ON DELETE CASCADE
+);
+```
+
+#### Searches Book
+```
+CREATE TABLE IF NOT EXISTS searches_book (
+    Member_ID INT NOT NULL,
+    Book_ID VARCHAR(20) NOT NULL,
+    PRIMARY KEY (Member_ID, Book_ID),
+    FOREIGN KEY (Member_ID) REFERENCES member(Member_ID) ON DELETE CASCADE,
+    FOREIGN KEY (Book_ID) REFERENCES book(ISBN) ON DELETE CASCADE
+);
+```
+
+#### Searches Movie
+```
+CREATE TABLE IF NOT EXISTS searches_movie (
+    Member_ID INT NOT NULL,
+    Movie_ID VARCHAR(24) NOT NULL,
+    PRIMARY KEY (Member_ID, Movie_ID),
+    FOREIGN KEY (Member_ID) REFERENCES member(Member_ID) ON DELETE CASCADE,
+    FOREIGN KEY (Movie_ID) REFERENCES movie(ISAN) ON DELETE CASCADE
+);
+```
+
+#### Writes
+```
+CREATE TABLE IF NOT EXISTS writes (
+    Author_ID INT NOT NULL,
+    Book_ID VARCHAR(20) NOT NULL,
+    PRIMARY KEY (Author_ID, Book_ID),
+    FOREIGN KEY (Author_ID) REFERENCES author(ID) ON DELETE CASCADE,
+    FOREIGN KEY (Book_ID) REFERENCES book(ISBN) ON DELETE CASCADE
 );
 ```
 
