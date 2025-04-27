@@ -2,10 +2,39 @@
 
 ## Introduction
 
+### Project Goal
+
+Create a single-library Library Management System (LMS) that lets patrons borrow materials, pay late fees, reserve rooms, and sign up for events, while giving staff tools to manage inventory, returns, fines, and event scheduling.
+
+### Included Features
+
+- Member functions: check-out / return, fee tracking, room and material reservations, event registration, material donations.  
+- Staff functions: inventory control, fine administration, returns processing, event creation and oversight.
+
+## Excluded Features
+- Payroll, fundraising, or other financial modules  
+- Analytics, recommendation engines, or inter-library networking
+
+## Key Terms (abridged)
+- **LMS** – Database-backed system for books, members, staff, and events.  
+- **Member** – Patron who borrows items and joins events.  
+- **Staff / Librarian** – Maintains collection, check-outs, returns, and fees.  
+- **Material / Copy** – Physical item (book, movie) that can be loaned; multiple copies possible.  
+- **Reservation** – Holds a material or room for specific dates.  
+- **Community Event** – Library-hosted program open to member registration.  
+- **Donation / Loan** – Items given permanently / temporarily by members.  
+- **ISBN / ISAN** – Unique identifiers for books / audiovisual works.  
+- **Primary Key / Foreign Key** – Unique row identifier / reference to another table’s primary key.  
+- **Domain & Constraint** – Allowed data type and value rules for an attribute.
+
 ## Choice of Platform
 
+We choose to use MariaDB, an optimized fork of MySQL. MariaDB was simple to set up on the cycle servers which makes it a good fit for our project.
+
+We implemented our mock data creation and queries in Rust. We choose Rust because several team members were familiar with it. It is both a safe and high performance language which makes it a good choice for high traffic servers like a library management system.
+
 ## DDL
-Note: The DDL is not in order because we just provided the language to create the relations. For the acutally correct order, please see the [Source Code](https://github.com/dataBASED-eecs/dataBased/blob/main/part_5/source_code/src/main.rs)
+Note: The DDL is not in order because we just provided the language to create the relations. For the actually correct order, please see the [Source Code](https://github.com/dataBASED-eecs/dataBased/blob/main/part_5/source_code/src/main.rs)
 ### Entities
 #### Author
 ```
