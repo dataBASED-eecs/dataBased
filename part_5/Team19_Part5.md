@@ -411,7 +411,10 @@ The following shows all tables:
 | studio                    |
 | writes                    |
 +---------------------------+
-
 ```
 To see the contents of all the tables, please see [database_output.md](https://github.com/dataBASED-eecs/dataBased/blob/main/part_5/database_output.md)<br/>
+
+## Meeting Logs
+**Reference File:** [042025](../documentation/meeting_logs/042025.md)<br/>
+**Reference File:** [042725](../documentation/meeting_logs/042725.md)<br/>
 
