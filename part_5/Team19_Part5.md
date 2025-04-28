@@ -2,30 +2,46 @@
 
 ## Introduction
 
-### Project Goal
+### Project Overview  
+Our Library Management System (LMS) is designed to turn the library into a streamlined hub for learning and community engagement. Patrons can borrow and return materials while the system automatically handles due-date tracking and late-fee calculations. Members also have a portal to browse and sign up for library programs. Behind the scenes, staff get a dashboard for inventory control, fine management, and event scheduling.
 
-Create a single-library Library Management System (LMS) that lets patrons borrow materials, pay late fees, reserve rooms, and sign up for events, while giving staff tools to manage inventory, returns, fines, and event scheduling.
+### Scope  
+The project delivers a single-branch database application that covers:  
 
-### Included Features
+- **Materials & checkouts** – catalog items, loan periods, and returns.  
+- **Events & rooms** – member registration and room bookings.  
+- **Administrative tasks** – fee assessment, donations intake, inventory updates.  
 
-- Member functions: check-out / return, fee tracking, room and material reservations, event registration, material donations.  
-- Staff functions: inventory control, fine administration, returns processing, event creation and oversight.
+Deliberately *out of scope*: payroll, fundraising, advanced analytics, recommendation engines, and inter-library networking. All features are scoped for one standalone library.
 
-## Excluded Features
-- Payroll, fundraising, or other financial modules  
-- Analytics, recommendation engines, or inter-library networking
+### Glossary  
 
-## Key Terms (abridged)
-- **LMS** – Database-backed system for books, members, staff, and events.  
-- **Member** – Patron who borrows items and joins events.  
-- **Staff / Librarian** – Maintains collection, check-outs, returns, and fees.  
-- **Material / Copy** – Physical item (book, movie) that can be loaned; multiple copies possible.  
-- **Reservation** – Holds a material or room for specific dates.  
-- **Community Event** – Library-hosted program open to member registration.  
-- **Donation / Loan** – Items given permanently / temporarily by members.  
-- **ISBN / ISAN** – Unique identifiers for books / audiovisual works.  
-- **Primary Key / Foreign Key** – Unique row identifier / reference to another table’s primary key.  
-- **Domain & Constraint** – Allowed data type and value rules for an attribute.
+| Term | Meaning |
+| --- | --- |
+| **Library Management System (LMS)** | Database-backed platform for handling books, patrons, staff, and events. |
+| **Member** | Patron who borrows items and signs up for library programs. |
+| **Librarian / Library Staff** | Staff responsible for circulation, collections, and fee processing. |
+| **Organizer** | Staffer who creates and manages a specific library event. |
+| **Material** | Any lendable item (book, DVD, etc.). |
+| **Copy** | A physical instance of a material; several copies may exist for one title. |
+| **Donation** | Item permanently gifted to the library by a patron. |
+| **Loan** | Item temporarily lent to the library for a defined period. |
+| **Reservation** | Hold placed by a member on a material or room for set dates. |
+| **Community Event** | Library-hosted program open to member registration. |
+| **ISBN** | 10–13-digit International Standard Book Number. |
+| **ISAN** | International Standard Audiovisual Number for films and videos. |
+| **Primary Key** | Column (or set) that uniquely identifies each row in a table. |
+| **Foreign Key** | Column that links a row to the primary key of another table. |
+| **Schema (Relation)** | Structure and attributes of a single table. |
+| **Database Schema** | Complete set of tables, columns, and constraints. |
+| **Domain** | Allowed data type and value range for a column. |
+| **Domain Constraint** | Rule enforcing that a column’s values stay within its domain. |
+
+*Additional entity and relationship definitions appear where first referenced in the documentation.*
+
+## Changes from Part 4
+
+We changed the ISBN and ISAN data types to VARCHAR(20) and VARCHAR(24) respectively. This is because the ISBN and ISAN numbers can be alphanumeric.
 
 ## Choice of Platform
 
