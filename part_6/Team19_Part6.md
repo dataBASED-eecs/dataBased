@@ -132,7 +132,7 @@ average_outstanding_loans AS (
   SELECT AVG(num_outstanding_loans) AS avg_outstanding_loans
   FROM outstanding_loans
 )
-SELECT (avg_outstanding_loans / (num_outstanding_loans+1))*60*24
+SELECT Member_ID, (avg_outstanding_loans / (num_outstanding_loans+1))*60*24
 FROM outstanding_loans, average_outstanding_loans;
 ```
 
