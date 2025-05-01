@@ -73,11 +73,11 @@ all_materials AS (
   ORDER BY Copy_ID
 ),
 reserved_materials AS (
-  SELECT Title, Reservation_Date
+  SELECT Material_ID, Title, Reservation_Date
   FROM reserves_material
   INNER JOIN all_materials ON reserves_material.Material_ID = all_materials.Copy_ID
 )
-SELECT Title, Reservation_Date
+SELECT Material_ID, Title, Reservation_Date
 FROM reserved_materials;
 ```
 
